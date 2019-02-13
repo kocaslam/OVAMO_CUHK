@@ -1,0 +1,28 @@
+Part I: Growth characteristics detrmination.
+
+Growth charactersiitc: 
+  1) Maximum growth rate;
+  2) Maximum popuatiob increasee:
+  3) Lag ohase.
+
+The foloowing use the software GrowthRate to determinate the growth characteristics.
+It is a non-parametric method, i.e., not based on growth model.
+It provides better curve fitting behaviour.
+
+Please cite the following for using the GrowthRate software:
+Hall BG, Acar H, Nandipati A, Barlow M. 2014. Growth rates made easy. Mol Biol Evol. 311: 232–238.
+
+GrowtRate was available for different pflatform:
+Linux: https://sourceforge.net/projects/growthrates/files/GrowthRates%203.0%20Linux.zip/download
+macOS: https://sourceforge.net/projects/growthrates/files/GrowthRates%203.0%20Mac.zip/download
+Windows: https://sourceforge.net/projects/growthrates/files/GrowthRates%203.0%20Windows.zip/download
+
+Here, we demostrated the use in macOS platform.
+For other platform, please refer to the manual provided.
+
+1) Data acquitsition
+Data were acquire by different means using a microplate reader with OD mesurements.
+
+
+
+
