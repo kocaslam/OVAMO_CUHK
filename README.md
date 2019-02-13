@@ -6,10 +6,10 @@ such as probiotics prebotics fermetnation to investigation
 new prebiotics and engineer new probiotics strains.
 
 There are a total of four parts:
-Part 0 - Wet lab of microbial growth
-Part I - Growth characteristics
-Part II - Explorative analysis
-Part III - Genomics integration (optional)
+  1) Part 0 - Wet lab of microbial growth; 
+  2) Part I - Growth characteristics; 
+  3) Part II - Explorative analysis; 
+  4) Part III - Genomics integration (optional).
 
 Users are guided from the very begnning in obtaining the OD readout from microplat readers
 to the final output of explorative analysis output to gain biological insights.
