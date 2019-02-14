@@ -10,7 +10,7 @@ There are a total of four parts:
   2) Part I - Growth characteristics; 
   3) Part II - Explorative analysis; 
   4) Part III - Genomics integration (optional);
-  5) Part IV - Structure Integration (optional);
+  5) Part IV - Structure integration (optional);
   6) Part extra - CAZyme annotation.
   
 Users are guided from the very begnning in obtaining the OD readout from microplat readers
