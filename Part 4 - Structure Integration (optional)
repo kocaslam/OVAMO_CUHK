@@ -1,0 +1,36 @@
+Part 4 - Structure Integration (optional)
+
+This part is meant for the integration analysi with structure data available.
+
+Structure data can be from different chemical/instrumental analysis, for example:
+  1) total carbohydrate;
+  2) total protein;
+  3) molecular weight from HPLC;
+  4) mono-saccharide composition;
+  5) linkage of polymer chain;
+  6) special function groups
+  7) solubility
+  ...
+
+these data can also be integrated into the analysis with growth characteristics. including:
+  1) lag phase;
+  2) maximum growth rate;
+  3) maximum population increase.
+
+Integration analysis could be done in different ways.
+Mainly, a machine learning approach is taken.
+As new algorithm is being pushed out and old algorithm is being updated,
+users could choose their suitable analysis method.
+
+Here, we demostrtaed how it is done using the decision tree approach.
+
+1) Data acqusition
+
+2) Software download and installation
+
+3) Decision tree analysis
+
+4) results
+
+
+EOF
