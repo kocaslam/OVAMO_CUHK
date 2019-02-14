@@ -75,7 +75,7 @@ For other platforms, please refer to the manual provided.
     https://sourceforge.net/projects/growthrates/files/GrowthRates%203.0%20Mac.zip/download
     Download the zip file to the "Download" folder
 
-  b) Installation
+  b) Installation (open the terminal)
     $ cd /Users/kocaslam/Downloads/
     $ ls
       GrowthRates 3.0 Mac.zip
