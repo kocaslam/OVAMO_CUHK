@@ -74,6 +74,7 @@ For other platforms, please refer to the manual provided.
     Open a web browser, copy the link to the browser:
     https://sourceforge.net/projects/growthrates/files/GrowthRates%203.0%20Mac.zip/download
     Download the zip file to the "Download" folder
+    (users could also download the GrowthRate software in the repository. But it might lack update.)
 
   b) Installation (open the terminal)
     $ cd /Users/kocaslam/Downloads/
