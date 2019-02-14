@@ -1,6 +1,9 @@
 # OVAMO_CUHK
 Software development for the OVAMO system for anaerobic microbial culture using 96 well plate
 
+As for query and bug report, please contact:
+cufns_kocas@link.cuhk.edu.hk
+
 Codes used for the explortive analysis of fermentation,
 such as probiotics prebotics fermetnation to investigation
 new prebiotics and engineer new probiotics strains.
