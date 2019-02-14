@@ -5,8 +5,44 @@ This part is optional as the analysis require the genomes of bacteria.
 Users could download the genomes from ncbi if the genomes are available.
 Or users could sequence their own genome for analysis.
 
+plot_correlation_all_growth_characteristics
+library(ggpubr)
+corMatrix_bgGrouped <- read.csv("~/Desktop/GrowthRate/GrowthRates 3.0 Mac/Examples Unix/ownData/associationExtend/corMatrix_bgGrouped.csv", row.names=NULL, stringsAsFactors=FALSE)
+head(corMatrix_bgGrouped)
+  Strain Carbohydrate Plate    Rate MaxOD   Lag GH_Hits
+1     BI          XOS     1 0.00829 0.382 131.8       6
+2     BB          XOS     1 0.00710 0.388 116.9       4
+3     BL          XOS     1 0.00679 0.434 177.0      18
+4     BA          XOS     1 0.00579 0.446 112.6      20
+5     LB          XOS     1 0.00530 0.397 156.2      10
+6     CC          XOS     1 0.00793 0.429 169.0       5
+ggscatter(corMatrix_bgGrouped, x = "Rate", y = "MaxOD", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "Rates", ylab = "MaxOD", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "pearson", size=6) + font("xlab", size = 18) +  font("ylab", size = 18)
+ggscatter(corMatrix_bgGrouped, x = "MaxOD", y = "Lag", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "MaxOD", ylab = "Lag", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "pearson", size=6, label.x=0.4) + font("xlab", size = 18) +  font("ylab", size = 18)
+ggscatter(corMatrix_bgGrouped, x = "Rate", y = "Lag", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "Rate", ylab = "Lag", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "pearson", size=6, label.x=0.0075) + font("xlab", size = 18) +  font("ylab", size = 18)
+
+plot_correlation_all_GHs
+ggscatter(corMatrix_bgGrouped, x = "GH_Hits", y = "Rate", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "GH_Hits", ylab = "Rate", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "kendall", size=6, label.x=15) + font("xlab", size = 18) +  font("ylab", size = 18)
+ggscatter(corMatrix_bgGrouped, x = "GH_Hits", y = "MaxOD", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "GH_Hits", ylab = "MaxOD", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "kendall", size=6, label.x=16, label.y=c(0.15, 0.125, 0.1,0.075)) + font("xlab", size = 18) +  font("ylab", size = 18)
+ggscatter(corMatrix_bgGrouped, x = "GH_Hits", y = "Lag", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "GH_Hits", ylab = "Lag", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "kendall", size=6, label.x=14) + font("xlab", size = 18) +  font("ylab", size = 18)
 
 
+plot_correlation_bG_growth_characteristics
+corMatrix_bgOnly <- read.csv("~/Desktop/GrowthRate/GrowthRates 3.0 Mac/Examples Unix/ownData/associationExtend/corMatrix_bgOnly.csv", row.names=NULL, stringsAsFactors=FALSE)
+head(corMatrix_bgOnly)
+  Strain Carbohydrate Plate    Rate MaxOD   Lag GH_Hits
+1     BI       bG_PCS     1 0.00116 0.074 366.9       6
+2     BB       bG_PCS     1 0.00685 0.358 132.5       5
+3     BL       bG_PCS     1 0.00109 0.073 503.5       9
+4     BA       bG_PCS     1 0.00114 0.105 549.9      15
+5     LB       bG_PCS     1 0.00203 0.109 845.6       8
+6     CC       bG_PCS     1 0.00320 0.328 373.4       9
+ggscatter(corMatrix_bgOnly, x = "Rate", y = "MaxOD", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "Rates", ylab = "MaxOD", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "pearson", size=6) + font("xlab", size = 18) +  font("ylab", size = 18)
+ggscatter(corMatrix_bgOnly, x = "Rate", y = "Lag", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "Rate", ylab = "Lag", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "pearson", size=6, label.x=0.0075) + font("xlab", size = 18) + font("ylab", size = 18)
+ggscatter(corMatrix_bgOnly, x = "MaxOD", y = "Lag", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "MaxOD", ylab = "Lag", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "pearson", size=6, label.x=0.35) + font("xlab", size = 18) + font("ylab", size = 18)
 
+plot_correlation_bG_GHs
+ggscatter(corMatrix_bgOnly, x = "GH_Hits", y = "Rate", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "GH_Hits", ylab = "Rate", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "kendall", size=6, label.x=12) + font("xlab", size = 18) +  font("ylab", size = 18)
+ggscatter(corMatrix_bgOnly, x = "GH_Hits", y = "MaxOD", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "GH_Hits", ylab = "MaxOD", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "kendall", size=6, label.x=5.5) + font("xlab", size = 18) +  font("ylab", size = 18)
+ggscatter(corMatrix_bgOnly, x = "GH_Hits", y = "Lag", ggtheme=theme_gray(), add = "reg.line", conf.int = F, cor.coef = F, xlab = "GH_Hits", ylab = "Lag", palette="lancet", color = "Carbohydrate", shape = 19, size=4, legend.title="Carbohydrate") + stat_cor(aes(color = Carbohydrate), method = "kendall", size=6, label.x=11) + font("xlab", size = 18) +  font("ylab", size = 18)
 
-
+EOF
