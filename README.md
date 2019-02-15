@@ -12,12 +12,11 @@ There are a total of four parts:
   1) Part 0 - Wet lab of microbial growth; 
   2) Part I - Growth characteristics; 
   3) Part II - Explorative analysis;
-  4) Part III - Structure integration;
+  4) Part III - Prebiotic structure integration.
   
 Users are guided from the very begnning in obtaining the OD readout from microplat readers
 to the final output of explorative analysis output to gain biological insights.
 
-Part III - Genomics integration (optional) is optional as it requred the input of genome
-to predict the CAZymes profile for integration analysis.
+Part III - Prebiotic structure integration might optional if users lack prebioitc structural data.
 
 EOF
