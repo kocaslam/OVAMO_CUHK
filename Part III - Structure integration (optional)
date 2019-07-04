@@ -22,7 +22,7 @@ Mainly, a machine learning approach is taken.
 As new algorithm is being pushed out and old algorithm is being updated,
 users could choose their suitable analysis method.
 
-Here, we demostrtaed how it is done using the decision tree approach.
+Here, we demostrtaed how it is done using the decision tree approach in R.
 
 1) Data acqusition
   > setwd("~/Desktop/GrowthRate/GrowthRates 3.0 Mac/ownData/1_structure")
