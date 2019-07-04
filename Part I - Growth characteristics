@@ -2,10 +2,10 @@ Part I: Growth characteristics detrmination.
 
 Growth characteristics include: 
   1) Maximum growth rate;
-  2) Maximum popuatiob increasee:
-  3) Lag ohase.
+  2) Maximum population increase:
+  3) Lag phase.
 
-The foloowing use the software GrowthRate to determinate the growth characteristics.
+The foloowing use the software "GrowthRate" to determinate the growth characteristics.
 It is a non-parametric method, i.e., not based on growth model.
 It provides better curve fitting behaviour.
 
@@ -22,7 +22,7 @@ For other platforms, please refer to the manual provided.
 
 1) Data acquitsition
   
-  Data were acquire by different means using a microplate reader with OD mesurements.
+  Data were acquired by different means using a microplate reader with OD mesurements.
   The data was usually exported excel files:
   such as (TECAN):
     ----------
@@ -57,9 +57,9 @@ For other platforms, please refer to the manual provided.
     ...
     ----------
   
-  Users are suggested to manually to change the excel export to the required format needed,
-  as there is different micro-plate model and no scripts/codes coudl fit all.
-  Beside, a rough data estimation coudl be done during re-formatting.
+  Users are suggested to manually change the excel export to the required format needed,
+  as there is different micro-plate model and no scripts/codes could fit all instruments.
+  Beside, a rough data estimation/skimming could be done during re-formatting.
   Users could also write their own codes for re-formatting.
   
   Assume, we have the re-formatted file save as .txt:
