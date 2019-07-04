@@ -103,7 +103,7 @@ Part II - Explorative analysis
   > setwd("~/Desktop/GrowthRate/GrowthRates 3.0 Mac/Examples Unix/ownData")
   > combined <- read.csv("~/Desktop/GrowthRate/GrowthRates 3.0 Mac/Examples Unix/ownData/combined.csv", stringsAsFactors=FALSE)
   > head(combined)
-    X...Strain  Carbohydrate Plate    Rate      R2 MaxOD   Lag
+    Strain  Carbohydrate Plate    Rate      R2 MaxOD   Lag
     1         BI       Glucose     1 0.01116 0.99884 0.381 134.2
     2         BI        Inulin     1 0.00894 0.98968 0.390 154.4
     3         BI        bG_PCS     1 0.00116 0.77958 0.074 366.9
@@ -111,7 +111,7 @@ Part II - Explorative analysis
     5         BI    bG_Curdlan     1 0.00797 0.99667 0.371 121.2
     6         BI bG_CM_Curdlan     1 0.00410 0.99923 0.244 788.4
   > tail(combined)
-    X...Strain  Carbohydrate Plate    Rate      R2 MaxOD   Lag
+    Strain  Carbohydrate Plate    Rate      R2 MaxOD   Lag
     193         CC bG_CM_Curdlan     3 0.00235 0.90015 0.305 213.9
     194         CC    bG_Control     3 0.00736 0.94102 0.302 421.3
     195         CC   bG_Pachyman     3 0.00302 0.90083 0.387 166.9
@@ -119,7 +119,7 @@ Part II - Explorative analysis
     197         CC           XOS     3 0.00762 0.99797 0.469 181.6
     198         CC     Lactulose     3 0.00757 0.96919 0.353 290.6
   > summary(combined)
-    X...Strain        Carbohydrate           Plate        Rate         
+    Strain        Carbohydrate           Plate        Rate         
     Length:198         Length:198         Min.   :1   Min.   :0.000010  
     Class :character   Class :character   1st Qu.:1   1st Qu.:0.004525  
     Mode  :character   Mode  :character   Median :2   Median :0.006110  
@@ -144,33 +144,33 @@ Part II - Explorative analysis
   
   # to check the vale of Rate, R2, MaxOD and Lag among the three plates
   # Rate of Plate 1, 2, and 3
-  > my_data2 <- merge(merge(as.data.frame(combined[1:66,c(1,2,4)]), as.data.frame(combined[67:132,c(1,2,4)]), by=c("X...Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,4)]), by=c("X...Strain", "Carbohydrate"))
-  > colnames(my_data2) <- c("X...Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
+  > my_data2 <- merge(merge(as.data.frame(combined[1:66,c(1,2,4)]), as.data.frame(combined[67:132,c(1,2,4)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,4)]), by=c("Strain", "Carbohydrate"))
+  > colnames(my_data2) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
   > chart.Correlation(my_data2[,c(3,4,5)], histogram=TRUE, pch=19)
   # MaxOD of Plate 1, 2, and 3
-  > my_data3 <- merge(merge(as.data.frame(combined[1:66,c(1,2,6)]), as.data.frame(combined[67:132,c(1,2,6)]), by=c("X...Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,6)]), by=c("X...Strain", "Carbohydrate"))
-  > colnames(my_data3) <- c("X...Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
+  > my_data3 <- merge(merge(as.data.frame(combined[1:66,c(1,2,6)]), as.data.frame(combined[67:132,c(1,2,6)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,6)]), by=c("Strain", "Carbohydrate"))
+  > colnames(my_data3) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
   > chart.Correlation(my_data3[,c(3,4,5)], histogram=TRUE, pch=19)
   # Lag of Plate 1, 2, and 3
-  > my_data4 <- merge(merge(as.data.frame(combined[1:66,c(1,2,7)]), as.data.frame(combined[67:132,c(1,2,7)]), by=c("X...Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,7)]), by=c("X...Strain", "Carbohydrate"))
-  > colnames(my_data4) <- c("X...Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
+  > my_data4 <- merge(merge(as.data.frame(combined[1:66,c(1,2,7)]), as.data.frame(combined[67:132,c(1,2,7)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,7)]), by=c("Strain", "Carbohydrate"))
+  > colnames(my_data4) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
   > chart.Correlation(my_data4[,c(3,4,5)], histogram=TRUE, pch=19)
   # R2 of Plate 1, 2, and 3
-  > my_data5 <- merge(merge(as.data.frame(combined[1:66,c(1,2,5)]), as.data.frame(combined[67:132,c(1,2,5)]), by=c("X...Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,5)]), by=c("X...Strain", "Carbohydrate"))
-  > colnames(my_data5) <- c("X...Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
+  > my_data5 <- merge(merge(as.data.frame(combined[1:66,c(1,2,5)]), as.data.frame(combined[67:132,c(1,2,5)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[133:198,c(1,2,5)]), by=c("Strain", "Carbohydrate"))
+  > colnames(my_data5) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
   > chart.Correlation(my_data5[,c(3,4,5)], histogram=TRUE, pch=19)
   
 6) Explorative analysis - Boxplots to check the distribution
   # boxplot of Rate, R2, MaxOD, and Lag against the 6 bacteria strain (fermentation ability of different bacteria)
   # boxplot of Rate against the 6 bacteria
   > library(ggplot2)
-  > ggplot(combined, aes(x=X...Strain, y=Rate, fill=X...Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  > ggplot(combined, aes(x=Strain, y=Rate, fill=Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
   # boxplot of R2 against the 6 bacteria
-  > ggplot(combined, aes(x=X...Strain, y=R2, fill=X...Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  > ggplot(combined, aes(x=Strain, y=R2, fill=Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
   # boxplot of MaxOD against the 6 bacteria
-  > ggplot(combined, aes(x=X...Strain, y=MaxOD, fill=X...Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  > ggplot(combined, aes(x=Strain, y=MaxOD, fill=Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
   # boxplot of Lag against the 6 bacteria
-  > ggplot(combined, aes(x=X...Strain, y=Lag, fill=X...Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  > ggplot(combined, aes(x=Strain, y=Lag, fill=Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
   
   # boxplot of Rate, R2, MaxOD, and Lag against the 11 carbohydrates (fermentability of carbohydrates)
   # boxplot of Rate against the 11 carbohydrate
@@ -183,12 +183,12 @@ Part II - Explorative analysis
   > ggplot(combined, aes(x=Carbohydrate, y=Lag, fill=Carbohydrate)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
   
 7) Explorative analysis - Heatmap
-  # Heatmap  does not allow samples of the same name,
+  # Heatmap does not allow samples of the same name,
   # therefore, only the data of means of the 3 biological triplicate are used in heatmap.
   
   # we generate the matrix with mean first
   > library(tidyverse)
-  > combined$x <- paste(combined$X...Strain,"-",combined$Carbohydrate)
+  > combined$x <- paste(combined$Strain,"-",combined$Carbohydrate)
   
   # matrix with mean of Rate
   > rate_only_mean <- combined[,c(4,8)] %>% group_by(x) %>% summarise(average = mean(Rate))
@@ -240,7 +240,7 @@ Part II - Explorative analysis
   # and there a total of 198 observation list was used.
   
   # prepare the PCA input format
-  > combined$y <- paste(combined$X...Strain,"-",combined$Plate)
+  > combined$y <- paste(combined$Strain,"-",combined$Plate)
   > combined$z <- paste(combined$Carbohydrate,"-",combined$Plate)
   > library(tidyverse)
   # prepare the PCA input matrix for Rate based on 11 carbohydrates
@@ -255,13 +255,13 @@ Part II - Explorative analysis
   
   # prepare the PCA input matrix for Rate based on 6 bacterial strains
   > all_rate_strain_long <- combined[,c(10,1,4)]
-  >  all_rate_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_rate_strain_long, key = X...Strain, value = Rate))),var="z"))
+  >  all_rate_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_rate_strain_long, key = Strain, value = Rate))),var="z"))
   # prepare the PCA input matrix for MaxOD based on 6 bacterial strains
   > all_MaxOD_strain_long <- combined[,c(10,1,6)]
-  > all_MaxOD_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_MaxOD_strain_long, key = X...Strain, value = MaxOD))),var="z"))
+  > all_MaxOD_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_MaxOD_strain_long, key = Strain, value = MaxOD))),var="z"))
   # prepare the PCA input matrix for Lag based on 6 bacterial strains
   > all_Lag_strain_long <- combined[,c(10,1,7)]
-  > all_Lag_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_Lag_strain_long, key = X...Strain, value = Lag))),var="z"))
+  > all_Lag_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_Lag_strain_long, key = Strain, value = Lag))),var="z"))
   
   # perform PCA plot
   > library(ggfortify)
