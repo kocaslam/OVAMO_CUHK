@@ -59,7 +59,7 @@ Part II - Explorative analysis
   of the 11 carbohydrates based on the value of glucose respectively.
   It is easily doen in excel using the "=A4/$B$4",
   assuming the A4 is the other 10 carbohydrates and B4 is glucose value.
-  Thisnormalization should be done separatly on each plate and to each combination of bacteria.
+  This normalization should be done separatly on each plate and to each combination of bacteria.
   After normalization, the glucose value is 1 and all the glucose value are removed.
   
   The final normalized re-formatted input file look as:
