@@ -3,7 +3,7 @@ Software development for the OVAMO system for anaerobic microbial culture using 
 an online tutorial with raw data, examples and codes.
 
 As for query and bug report, please contact:
-cufns_kocas@link.cuhk.edu.hk
+cufns_kocas@link.cuhk.edu.hk or kocaslam@gmail.com
 
 The online tutorial also involved other open-source softwares.
 Please respect copy-right and cite the sources of softwares and codes used appropriately.
