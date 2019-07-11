@@ -1,7 +1,7 @@
-Part II - Explorative analysis
+Part III - Explorative analysis
 
 1) Data acquistion
-  The three ouput files from step I (Part I - Growth characteristics): 
+  The three ouput files from step II (Part II - Growth characteristics): 
   formattedData1.summary
   formattedData2.summary
   formattedData3.summary
@@ -87,11 +87,11 @@ Part II - Explorative analysis
   Users could choose their favourite siftwares for the analysis.
   Here, we use R Studio for analysis.
   
-  Download R for macOS version:
+  Download R for macOS version (user could more updated version):
   https://cran.rstudio.com/bin/macosx/R-3.5.2.pkg
   Double click the installation icon to install.
   
-  Download R Studio for macOS version:
+  Download R Studio for macOS version (user could more updated version):
   https://download1.rstudio.org/RStudio-1.1.463.dmg
   Double click the installation icon to install.
   
