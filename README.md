@@ -20,7 +20,7 @@ new prebiotics and engineer new probiotics strains.
 There are a total of four parts:
   1) Part 0 - Wet lab of microbial growth; 
   2) Part I - Growth parameters determination; 
-  3) Part II - Explorative analysis;
+  3) Part II - Exploratory analysis;
   4) Part III - Structure integration (optional).
   
 Users are guided from the very begnning in obtaining the OD readout from microplat readers
