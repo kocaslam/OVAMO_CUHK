@@ -18,16 +18,16 @@ such as probiotics prebotics fermetnation to investigation
 new prebiotics and engineer new probiotics strains.
 
 There are a total of four parts:
-  1) Part I - Wet lab of microbial growth; 
-  2) Part II - Growth characteristics; 
-  3) Part III - Explorative analysis;
-  4) Part IV - Prebiotic structure integration (optional).
+  1) Part 0 - Wet lab of microbial growth; 
+  2) Part I - Growth parameters determination; 
+  3) Part II - Explorative analysis;
+  4) Part III - Structure integration (optional).
   
 Users are guided from the very begnning in obtaining the OD readout from microplat readers
 to the final output of explorative analysis output to gain biological insights.
 Softwares installation, data arrangement, parameters suggestion, and
 some raw data files, were provided to make the online tuturial more users-friednly.
 
-Part IV - Prebiotic structure integration might optional if users lack prebioitc structural data.
+Part III - Prebiotic structure integration might optional if users lack prebioitc structural data.
 
 EOF
