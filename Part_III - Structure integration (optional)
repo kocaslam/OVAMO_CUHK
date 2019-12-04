@@ -1,0 +1,463 @@
+Part IV - Structure integration (optional)
+
+This part is meant for the integration analysi with structure data available.
+Structural importance of different structural features was accessed by random forest analysis.
+It allows a comparable indicaotr among different structural features that are not themselves comparable.
+
+Structure data can be from different chemical/instrumental analysis, for example:
+  1) total carbohydrate;
+  2) total protein;
+  3) molecular weight from HPLC;
+  4) mono-saccharide composition;
+  5) linkage of polymer chain;
+  6) special function groups
+  7) solubility
+  ...
+  
+The choice of structural features are unlimited and greatly depends on the users' objectives
+and the abolity to locae novel structural features.
+Since random forest is a machine learning algorithm, it requires domain knpwledge for feature generation.
+
+These data can also be integrated into the analysis with growth characteristics. including:
+  1) lag phase;
+  2) maximum growth rate;
+  3) maximum population increase.
+
+Integration analysis could be done in different ways.
+Mainly, a machine learning approach is taken.
+As new algorithm is being pushed out and old algorithm is being updated,
+users could choose their suitable analysis method.
+
+Here, we demostrtaed how it is done using the random forest in R.
+Here, we provide an example by extracting only a particular type of carbohydrate
+from the tutorial in Part_I and Part_II.
+The extracted carbohydrate was beta-glucans.
+This help finding the relative importance of different structural features of beat-glucans.
+
+Users could also try to use the growth parameters of all the 9 carbohydrates for random forest analysis,
+and it will allow a more diverse structural features to be compared.
+
+Users are required to combine the both the growth parameters and structural features
+into one input fiel for random forest analysis manually
+and double check for correctness.
+
+We provide an example file named "structureMatrix_bGonly.csv".
+Users could open the file and get their data input similarly.
+
+1) Directory setting and data input
+  # set the working directory and load the data
+  # users need to set their own directory correctly
+  > setwd("/dataDirectory/")
+  > structureMatrix <- read.csv("/dataDirectory/structureMatrix_bGonly.csv", row.names=NULL)
+  # and the file look like
+  > head(structureMatrix_bGonly_noCC)
+    Strain  Carbohydrate Plate    Rate      R2   MaxOD     Lag     X.CHO  X.N   X.C    X.S monomerCount MW_count MW_highest linkageCount functionCount solubility
+  1     BA bG_CM_Curdlan     1 0.58051 0.99619 0.95663 3.81167 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  2     BB bG_CM_Curdlan     1 0.95791 1.00132 1.06304 0.92239 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  3     BI bG_CM_Curdlan     1 0.36738 1.00039 0.64042 5.87481 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  4     BL bG_CM_Curdlan     1 0.05150 0.88154 0.22626 5.57304 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  5     LB bG_CM_Curdlan     1 0.26471 0.98435 0.40863 0.97752 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  6     BA    bG_Control     1 0.69959 0.99754 0.98795 3.97032 0.7436506 2.95 44.54 0.1135            4        2   394.1922            3             0          1
+  # users could also get a summary of the extracted data of beta-glucans only
+  > summary(structureMatrix_bGonly)
+ 
+2) Software download and installation
+  > install.packages("skimr")
+  > library(skimr)
+  > install.packages("randomForest")
+  > library(randomForest)
+
+3) Data sub-sets based on different growth parameters (Rate, MaxOD, and Lag)
+  # sample subset for Rate, MaxOD and Lag based on the input file "structureMatrix_bGonly.csv"
+  # Subset of Rate
+  > subset_Rate <- subset(structureMatrix_bGonly, select=-c(Strain, Carbohydrate, Plate, R2, MaxOD, Lag))
+  > head(subset_Rate)
+       Rate     X.CHO  X.N   X.C    X.S monomerCount MW_count MW_highest linkageCount functionCount solubility
+  1 0.58051 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  2 0.95791 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  3 0.36738 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  4 0.05150 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  5 0.26471 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
+  6 0.69959 0.7436506 2.95 44.54 0.1135            4        2   394.1922            3             0          1
+  > skim(subset_Rate)
+  Skim summary statistics
+   n obs: 90 
+   n variables: 11 
+  ── Variable type:integer ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+        variable missing complete  n mean   sd p0 p25 p50 p75 p100     hist
+   functionCount       0       90 90 0.17 0.37  0   0   0   0    1 ▇▁▁▁▁▁▁▂
+    linkageCount       0       90 90 1.33 0.75  1   1   1   1    3 ▇▁▁▁▁▁▁▂
+    monomerCount       0       90 90 1.67 1.11  1   1   1   2    4 ▇▁▂▁▁▁▁▂
+        MW_count       0       90 90 2    0.82  1   1   2   3    3 ▇▁▁▇▁▁▁▇
+      solubility       0       90 90 1.17 0.69  0   1   1   2    2 ▂▁▁▇▁▁▁▅
+  ── Variable type:numeric ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+     variable missing complete  n    mean      sd       p0    p25     p50    p75   p100     hist
+   MW_highest       0       90 90 244.8   139.85   5.65    161.58 247.55  394.19 412.26 ▃▁▁▃▃▃▁▇
+         Rate       0       90 90   0.69    0.36   0.00088   0.42   0.76    0.95   1.49 ▅▅▃▆▇▇▂▂
+          X.C       0       90 90  39.69    2.43  36.5      38.78  39.28   39.77  44.54 ▂▁▇▂▁▁▁▂
+        X.CHO       0       90 90   0.91    0.078  0.74      0.93   0.95    0.96   0.97 ▂▁▁▁▁▁▅▇
+          X.N       0       90 90   0.49    1.11   0         0      0       0      2.95 ▇▁▁▁▁▁▁▂
+          X.S       0       90 90   0.073   0.11   0         0      0.015   0.11   0.29 ▇▁▁▂▁▁▁▂
+  # Similarly, Subset MaxOD
+  > subset_MaxOD <- subset(structureMatrix_bGonly, select=-c(Strain, Carbohydrate, Plate, Rate, R2, Lag))
+  > head(subset_MaxOD)
+  > skim(subset_MaxOD)
+  Skim summary statistics
+   n obs: 90 
+   n variables: 11  
+  ── Variable type:integer ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+        variable missing complete  n mean   sd p0 p25 p50 p75 p100     hist
+   functionCount       0       90 90 0.17 0.37  0   0   0   0    1 ▇▁▁▁▁▁▁▂
+    linkageCount       0       90 90 1.33 0.75  1   1   1   1    3 ▇▁▁▁▁▁▁▂
+    monomerCount       0       90 90 1.67 1.11  1   1   1   2    4 ▇▁▂▁▁▁▁▂
+        MW_count       0       90 90 2    0.82  1   1   2   3    3 ▇▁▁▇▁▁▁▇
+      solubility       0       90 90 1.17 0.69  0   1   1   2    2 ▂▁▁▇▁▁▁▅
+  ── Variable type:numeric ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+     variable missing complete  n    mean      sd    p0    p25     p50    p75   p100     hist
+        MaxOD       0       90 90   0.8     0.34   0.18   0.42   0.94    1.08   1.25 ▆▂▁▂▁▇▇▅
+   MW_highest       0       90 90 244.8   139.85   5.65 161.58 247.55  394.19 412.26 ▃▁▁▃▃▃▁▇
+          X.C       0       90 90  39.69    2.43  36.5   38.78  39.28   39.77  44.54 ▂▁▇▂▁▁▁▂
+        X.CHO       0       90 90   0.91    0.078  0.74   0.93   0.95    0.96   0.97 ▂▁▁▁▁▁▅▇
+          X.N       0       90 90   0.49    1.11   0      0      0       0      2.95 ▇▁▁▁▁▁▁▂
+          X.S       0       90 90   0.073   0.11   0      0      0.015   0.11   0.29 ▇▁▁▂▁▁▁▂
+  # And similarly, Subset Lag
+  > subset_Lag <- subset(structureMatrix_bGonly_noCC, select=-c(Strain, Carbohydrate, Plate, Rate, R2, MaxOD))
+  > head(subset_Lag)
+  > skim(subset_Lag)
+  Skim summary statistics
+   n obs: 90 
+   n variables: 11 
+  ── Variable type:integer ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+        variable missing complete  n mean   sd p0 p25 p50 p75 p100     hist
+   functionCount       0       90 90 0.17 0.37  0   0   0   0    1 ▇▁▁▁▁▁▁▂
+    linkageCount       0       90 90 1.33 0.75  1   1   1   1    3 ▇▁▁▁▁▁▁▂
+    monomerCount       0       90 90 1.67 1.11  1   1   1   2    4 ▇▁▂▁▁▁▁▂
+        MW_count       0       90 90 2    0.82  1   1   2   3    3 ▇▁▁▇▁▁▁▇
+      solubility       0       90 90 1.17 0.69  0   1   1   2    2 ▂▁▁▇▁▁▁▅
+  ── Variable type:numeric ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+     variable missing complete  n    mean      sd    p0    p25     p50    p75   p100     hist
+         Lag       0       90 90   2.2     1.99   0.11   0.93   1.13    2.86   7.85 ▇▅▁▁▁▂▁▁
+  MW_highest       0       90 90 244.8   139.85   5.65 161.58 247.55  394.19 412.26 ▃▁▁▃▃▃▁▇
+         X.C       0       90 90  39.69    2.43  36.5   38.78  39.28   39.77  44.54 ▂▁▇▂▁▁▁▂
+       X.CHO       0       90 90   0.91    0.078  0.74   0.93   0.95    0.96   0.97 ▂▁▁▁▁▁▅▇
+         X.N       0       90 90   0.49    1.11   0      0      0       0      2.95 ▇▁▁▁▁▁▁▂
+         X.S       0       90 90   0.073   0.11   0      0      0.015   0.11   0.29 ▇▁▁▂▁▁▁▂
+
+  
+  
+4) Random forest analysis to retrieve structural importance to growth parameters (Rate, MaxOD, abd Lag)
+  # As for the random forest analysis, users could also do an optimizatiob to the hyper-parameters
+  # such as "mtry", "ntree" using the package "caret".
+  # Optimization of hyper-parameters take time and the improvement might not be very prominents.
+  # Here, we only demonstrated the most basic use of random forest analysis without optimization.
+  
+  # RandomForest_Rate
+  > Rate.rf <- randomForest(Rate~., data = subset_Rate, importance = TRUE, proximity = TRUE, ntree = 1000, replace = TRUE) 
+  > Rate.rf
+  Call:
+  randomForest(formula = Rate ~ ., data = subset_Rate, importance = TRUE,      proximity = TRUE, ntree = 1000, replace = TRUE) 
+                Type of random forest: regression
+                      Number of trees: 1000
+  No. of variables tried at each split: 3
+            Mean of squared residuals: 0.09621044
+                      % Var explained: 26.31
+  > plot(Rate.rf)
+  > importance(Rate.rf, type=1)
+                  %IncMSE
+  X.CHO         29.608817
+  X.N            4.846082
+  X.C           17.392656
+  X.S            7.638519
+  monomerCount   6.380257
+  MW_count       5.909639
+  MW_highest    13.422171
+  linkageCount   6.118368
+  functionCount  9.980061
+  solubility    10.913971
+  > Rate.rf_1 <- importance(Rate.rf, type=1)
+  > write.csv(Rate.rf_1, file = "Rate.rf_1.csv",row.names=TRUE)
+  > importance(Rate.rf, type=2)
+                IncNodePurity
+  X.CHO            1.88255166
+  X.N              0.07251487
+  X.C              0.89247030
+  X.S              0.16294311
+  monomerCount     0.10517989
+  MW_count         0.12095385
+  MW_highest       0.66259859
+  linkageCount     0.08314115
+  functionCount    0.20834615
+  solubility       0.36231524
+  > Rate.rf_2 <- importance(Rate.rf, type=2)
+  > write.csv(Rate.rf_2, file = "Rate.rf_2.csv",row.names=TRUE)
+  # plot the two different variable  importance measure
+  # users could choose an appropriately importance measures based on their objectives
+  > varImpPlot(Rate.rf)
+  
+5)  random forests analysis of MaxOD against different structural features
+  #RandomForest_MaxOD
+  > MaxOD.rf <- randomForest(MaxOD~., data = subset_MaxOD, importance = TRUE, proximity = TRUE, ntree = 1000, replace = TRUE)
+  > MaxOD.rf
+  Call:
+  randomForest(formula = MaxOD ~ ., data = subset_MaxOD, importance = TRUE,      proximity = TRUE, ntree = 1000, replace = TRUE) 
+                Type of random forest: regression
+                      Number of trees: 1000
+  No. of variables tried at each split: 3
+            Mean of squared residuals: 0.06981258
+                      % Var explained: 40.5
+  > plot(MaxOD.rf)
+  > importance(MaxOD.rf, type=1)
+                  %IncMSE
+  X.CHO         28.475565
+  X.N            7.427084
+  X.C           18.254504
+  X.S            9.100029
+  monomerCount   6.641544
+  MW_count      10.274996
+  MW_highest    14.327560
+  linkageCount   6.199862
+  functionCount 11.440374
+  solubility    15.601596
+  > MaxOD.rf_1 <- importance(MaxOD.rf, type=1)
+  > write.csv(MaxOD.rf_1, file = "MaxOD.rf_1.csv",row.names=TRUE)
+  > importance(MaxOD.rf, type=2)
+                IncNodePurity
+  X.CHO            1.96321549
+  X.N              0.09238880
+  X.C              1.08044725
+  X.S              0.18255730
+  monomerCount     0.10556196
+  MW_count         0.21959740
+  MW_highest       0.65809149
+  linkageCount     0.07868072
+  functionCount    0.16907083
+  solubility       0.76192727
+  > MaxOD.rf_2 <- importance(MaxOD.rf, type=2)
+  > write.csv(MaxOD.rf_2, file = "MaxOD.rf_2.csv",row.names=TRUE)
+  > varImpPlot(MaxOD.rf)
+
+6)  random forests analysis of Lag against different structural features
+  #RandomForest_Lag
+  > Lag.rf <- randomForest(Lag~., data = subset_Lag, importance = TRUE, proximity = TRUE, ntree = 1000, replace = TRUE)
+  > Lag.rf
+  Call:
+  randomForest(formula = Lag ~ ., data = subset_Lag, importance = TRUE,      proximity = TRUE, ntree = 1000, replace = TRUE) 
+                Type of random forest: regression
+                      Number of trees: 1000
+  No. of variables tried at each split: 3
+            Mean of squared residuals: 2.850568
+                      % Var explained: 27.15
+  > plot(Lag.rf)
+  > importance(Lag.rf, type=1)
+                  %IncMSE
+  X.CHO         30.791200
+  X.N            4.764829
+  X.C           17.411100
+  X.S            7.701753
+  monomerCount   6.447934
+  MW_count       4.788666
+  MW_highest    14.310865
+  linkageCount   4.949610
+  functionCount 11.010974
+  solubility     9.315896
+  > Lag.rf_1 <- importance(Lag.rf, type=1)
+  > write.csv(Lag.rf_1, file = "Lag.rf_1.csv",row.names=TRUE)
+  > importance(Lag.rf, type=2)
+                IncNodePurity
+  X.CHO             58.493127
+  X.N                2.405458
+  X.C               25.602911
+  X.S                4.322004
+  monomerCount       3.006584
+  MW_count           3.300137
+  MW_highest        20.552519
+  linkageCount       2.387453
+  functionCount      9.454591
+  solubility        10.111967
+  > Lag.rf_2 <- importance(Lag.rf, type=2)
+  > write.csv(Lag.rf_2, file = "Lag.rf_2.csv",row.names=TRUE)
+  > varImpPlot(Lag.rf)
+
+7) Modification direction of selected structural features by Pearson' correlation.
+  # After determined some of the top strcutral feeatures that gave higher importance value using random forest analysis,
+  # we would like to check the direction of change of structural features to the three growth parameters
+  # in order to understand which modification should we perform, e.g., increase/decrease the molecualr weight ...
+  # Here, we used Pearson's correlation, how times, regression migth be more usesful as the relationship might not be linear.
+  # we extracted the top features and provide an example file as "correlation.csv".
+  # User could use their own method in doing Pearson's correlation.
+  
+  # correlation after random forest top feature selection
+  # load input file
+  > setwd("/dataDirectory/")
+  > correlation <- read.csv("/dataDirectory/correlation.csv", stringsAsFactors=FALSE)
+ 
+  # load library
+  library(ggplot2)
+
+  ########################################
+  # We start with molecualr weight
+  #Rate_vs_MW
+  > ggplot(correlation, aes(x=MW_log, y=Rate)) + scale_x_continuous(limits=c(0,3)) + scale_y_continuous(limits=c(0, 1.8)) + geom_jitter(width=0.3, size=1, shape=1, color="steelblue", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Rate, correlation$MW_log)
+	  Pearson's product-moment correlation
+  data:  correlation$Rate and correlation$MW_log
+  t = -2.1107, df = 88, p-value = 0.03764
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  -0.40805455 -0.01301377
+  sample estimates:
+        cor 
+  -0.2195133 
+
+  #MaxOD_vs_MW
+  > ggplot(correlation, aes(x=MW_log, y=MaxOD)) + scale_x_continuous(limits=c(0,3.2)) + scale_y_continuous(limits=c(0, 1.5))  + geom_jitter(width=0.3, size=1, shape=1, color="steelblue", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$MaxOD, correlation$MW_log)
+	  Pearson's product-moment correlation
+  data:  correlation$MaxOD and correlationC$MW_log
+  t = -2.6063, df = 88, p-value = 0.01075
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  -0.44984212 -0.06415371
+  sample estimates:
+         cor 
+  -0.2676884 
+
+  #Lag_vs_MW
+  > ggplot(correlation, aes(x=MW_log, y=Lag)) + scale_x_continuous(limits=c(0,3.2)) + scale_y_continuous(limits=c(0, 8.5))  + geom_jitter(width=0.3, size=1, shape=1, color="steelblue", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Lag, correlation$MW_log)
+    Pearson's product-moment correlation
+  data:  correlation$Lag and correlation$MW_log
+  t = 2.6486, df = 88, p-value = 0.00958
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+   0.06847817 0.45329996
+  sample estimates:
+      cor 
+  0.271716 
+
+  ########################################
+  # Then we check percentage of carbohydarte
+  #Rate_vs_%CHO
+  > ggplot(correlation, aes(x=X.CHO, y=Rate)) + scale_x_continuous(limits=c(0.7,1)) + scale_y_continuous(limits=c(0, 1.75))  + geom_jitter(width=0.03, size=1, shape=1, color="seagreen", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Rate, correlation$X.CHO)
+	  Pearson's product-moment correlation
+  data:  correlation$Rate and correlation$X.CHO
+  t = 3.0214, df = 88, p-value = 0.003295
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  0.1062223 0.4829963
+  sample estimates:
+        cor 
+  0.3065696 
+
+  #MaxOD_vs_%CHO
+  > ggplot(correlation, aes(x=X.CHO, y=MaxOD)) + scale_x_continuous(limits=c(0.7,1)) + scale_y_continuous(limits=c(0, 1.5))  + geom_jitter(width=0.03, size=1, shape=1, color="seagreen", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$MaxOD, correlation$X.CHO)
+	  Pearson's product-moment correlation
+  data:  correlation$MaxOD and correlation$X.CHO
+  t = 2.8371, df = 88, p-value = 0.00565
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  0.08764765 0.46848965
+  sample estimates:
+        cor 
+  0.2894843 
+
+  #Lag_vs_%CHO
+  > ggplot(correlation, aes(x=X.CHO, y=Lag)) + scale_x_continuous(limits=c(0.7,1)) + scale_y_continuous(limits=c(0, 9))  + geom_jitter(width=0.03, size=1, shape=1, color="seagreen", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Lag, correlation$X.CHO)
+	  Pearson's product-moment correlation
+  data:  correlation$Lag and correlation$X.CHO
+  t = -3.031, df = 88, p-value = 0.0032
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+   -0.4837487 -0.1071930
+  sample estimates:
+         cor 
+  -0.3074589 
+
+  ########################################
+  # then we check solubility
+  #Rate_vs_sol
+  > ggplot(correlation, aes(x=solubility, y=Rate)) + scale_x_continuous(limits=c(-0.2,2.2)) + scale_y_continuous(limits=c(-0.1, 1.85))  + geom_jitter(width = 0.15, size=1, shape=1, color="purple", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Rate, correlation$solubility)
+	  Pearson's product-moment correlation
+  data:  correlation$Rate and correlation$solubility
+  t = 1.672, df = 88, p-value = 0.09808
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+   -0.03281357  0.36914689
+  sample estimates:
+        cor 
+  0.1754699 
+
+  #MaxOD_vs_sol
+  > ggplot(correlation, aes(x=solubility, y=MaxOD)) + scale_x_continuous(limits=c(-0.2,2.2)) + scale_y_continuous(limits=c(0, 1.35))  + geom_jitter(width = 0.15, size=1, shape=1, color="purple", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$MaxOD, correlation$solubility)
+	  Pearson's product-moment correlation
+  data:  correlation$MaxOD and correlation$solubility
+  t = 3.344, df = 88, p-value = 0.001215
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  0.1383038 0.5075739
+  sample estimates:
+       cor 
+  0.3357778
+
+  #Lag_vs_sol
+  > ggplot(correlation, aes(x=solubility, y=Lag)) + scale_x_continuous(limits=c(-0.2,2.2)) + scale_y_continuous(limits=c(0, 8.5))  + geom_jitter(width = 0.15, size=1, shape=1, color="purple", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Lag, correlation$solubility)
+	  Pearson's product-moment correlation
+  data:  correlation$Lag and correlation$solubility
+  t = -1.4131, df = 88, p-value = 0.1612
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  -0.34538879  0.05998986
+  sample estimates:
+        cor 
+  -0.1489517 
+
+  ########################################
+  # Finally, we check the functional group addition as carboxymethylation
+  #Rate_vs_functional group
+  > ggplot(correlation, aes(x=funct, y=Rate)) + scale_x_continuous(limits=c(-0.2, 1.2)) + scale_y_continuous(limits=c(-0.1, 1.65))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Rate, correlation$funct)
+	  Pearson's product-moment correlation
+  data:  correlation$Rate and correlation$funct
+  t = -2.3093, df = 88, p-value = 0.02327
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  -0.42508763 -0.03361242
+  sample estimates:
+         cor 
+  -0.2390396 
+
+  #MaxOD_vs_sol
+  > ggplot(correlation, aes(x=funct, y=MaxOD)) + scale_x_continuous(limits=c(-0.2,1.2)) + scale_y_continuous(limits=c(0, 1.35))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$MaxOD, correlation$funct)
+	  Pearson's product-moment correlation
+  data:  correlation$MaxOD and correlation$funct
+  t = -1.6407, df = 88, p-value = 0.1044
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  -0.36630932  0.03609096
+  sample estimates:
+        cor 
+  -0.1722879
+
+  #Lag_vs_sol
+  > ggplot(correlation, aes(x=funct, y=Lag)) + scale_x_continuous(limits=c(-0.2,1.2)) + scale_y_continuous(limits=c(0, 8.5))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
+  > cor.test(correlation$Lag, correlation$funct)
+	  Pearson's product-moment correlation
+  data:  correlation$Lag and correlation$funct
+  t = 2.9353, df = 88, p-value = 0.004251
+  alternative hypothesis: true correlation is not equal to 0
+  95 percent confidence interval:
+  0.09756661 0.47626192
+  sample estimates:
+       cor 
+  0.298624 
+
+
+ 
+EOF
