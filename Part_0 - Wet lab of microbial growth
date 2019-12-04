@@ -7,7 +7,7 @@ Sterile 96 well plates are needed.
 
 Fermentation mixture include:
 1) 100 µL of modified Medium for Colonic Bacteria, mMCB
-2) Individual carbohydrates at a final concentration of 2% (w/v)
+2) Individual carbohydrates at a final concentration of 1% (w/v)
 3) 2% individual bacterial inoculum
 4) 2% OxyraseR was added to each well
 
@@ -15,23 +15,29 @@ Fermentation mixture include:
 -> vacuum (70 cmHg) to de-gas for 5 minutes to remove any bubbles formed and dissolved gas;
 -> 100 µL of sterilized mineral oil was carefully overlaid in each well.
 
-Blank control wells without bacteria and carbohydrate sources were also included to check for the sterility of the medium.
+This system used the enzyme (biological) and vacuume & mineral oil (physical)
+to generate in situ anaerobic condition directly on the wells in 96-well plate.
+
+Blank control wells without bacteria and carbohydrate sources
+were also included to check for the sterility of the medium.
 Negative control wells were also included.
 
-We recommended a biological triplicate with each replicate one plate,
-i.e., if we have 6 x 11 and blank and control wells,
+We recommended a biological triplicate with each replicate on one plate,
+i.e., if we have 5 x 10 combinations and blank and control wells,
 we put them in one plate
 and prepare a total of three plates.
-Therefore, each plate normalized to the same blank well.
+Moreover, each plate normalized to the respective blank well.
 
 OD600 was then recorded using different micro-plate reader with kinetic mode,
 e.g.: TECAN Infinite M200 Microplate Reader (TECAN Group Ltd., Switzerland)
+or other apllicable instruments with proper settings.
 
 After the completion of the measurement, raw data were exported in Excel format for further analysis.
 
-Details of hardware set-up could be referred to OVAMO - Hardware Publication:
-Low-Cost Method Generating In Situ Anaerobic Conditions on a 96-Well Plate for Microbial Fermentation in Food Research
-J. Agric. Food Chem. 2018, 66, 44, 11839-11845
-https://pubs.acs.org/doi/10.1021/acs.jafc.8b04888
+As for users interested in the OVAMO method that employed in situ anaerobicity generation,
+details of hardware set-up could be referred to the OVAMO - Hardware Publication:
+
+Lam et al. Low-Cost Method Generating In Situ Anaerobic Conditions on a 96-Well Plate for Microbial Fermentation in Food Research
+J. Agric. Food Chem. 2018;66(4): 11839-11845.
 
 EOF
