@@ -1,0 +1,349 @@
+Part II - Exploratory analysis
+
+1) Data acquistion
+  The three ouput files from step II (Part II - Growth characteristics): 
+  formattedData1.summary
+  formattedData2.summary
+  formattedData3.summary
+  are the output files we needed for next step analysis.
+  
+2) Data merge and re-formatting
+  User are recomended to manually open the files using excel and merge all data into 1 file.
+    ----------
+    	  Growth			
+    Well	Rate	  R	Max OD	 lag time (minutes)
+    A1	0	----	----	
+    B2	0.01116	0.99884	0.381	134.2
+    B3	0.00894	0.98968	0.39	154.4
+    B4	0.00116	0.77958	0.074	366.9
+    B5	0.00718	0.99055	0.377	156.9
+    ...
+    ----------
+  Remove the 1st and 3rd rows, and 1st column of each files:
+    ----------			
+    Well	Rate	  R	Max OD	 lag time (minutes)
+    B2	0.01116	0.99884	0.381	134.2
+    B3	0.00894	0.98968	0.39	154.4
+    B4	0.00116	0.77958	0.074	366.9
+    B5	0.00718	0.99055	0.377	156.9
+    ...
+    ----------
+  Users should then replace the column "Well" with the information on "Strain", "Carbohydrate", "Plate".
+  And add this three columns:
+    ----------
+    Strain	Carbohydrate	Plate	Rate	  R2	MaxOD	 Lag
+    BI	bG_CM_Curdlan	1	0.0041	0.99923	0.244	788.4
+    BB	bG_CM_Curdlan	1	0.0066	0.99881	0.371	124.8
+    BL	bG_CM_Curdlan	1	0.00062	0.87719	0.081	1186.5
+    BA	bG_CM_Curdlan	1	0.00429	0.99592	0.397	372.4
+    LB	bG_CM_Curdlan	1	0.00153	0.98275	0.161	604.3
+    BI	bG_CM_Curdlan	2	0.00408	0.97886	0.257	760.5
+    BB	bG_CM_Curdlan	2	0.00626	0.99683	0.392	135.9
+    BL	bG_CM_Curdlan	2	0.00012	0.12571	0.099	1230
+    BA	bG_CM_Curdlan	2	0.0038	0.93835	0.43	333.8
+    LB	bG_CM_Curdlan	2	0.00252	0.91284	0.181	690.1
+    ...
+    ----------
+  This files could be used for the explorative analysis.
+  
+  Users could also do a filtering to the data and/or transformation of data
+  to gather a final input table for exploratory analysis.
+  
+  Here, we provide an example file named "combined.csv":
+  it include the raw data of the
+  a) 5 bacteria;
+  b) 10 carbohydrates; and
+  c) 3 plates.
+  
+3) Data normalization (optional)
+  This step is optional, as normalization might be necessary,
+  depends on the objectives of analysis.
+  Here, we normalized all the data (Rate, R2, MaxOD, Lag)
+  of the 10 carbohydrates based on the value of glucose respectively.
+  It is easily doen in excel using the "=A4/$B$4",
+  assuming the A4 is the other 19 carbohydrates and B4 is glucose value.
+  
+  This normalization should be done separatly on each plate and to each combination of bacteria.
+  After normalization, the glucose value is 1 and all the glucose value are removed.
+  
+  The final normalized re-formatted input file look as:
+    ----------
+    Strain	Carbohydrate	Plate	Rate	  R2	MaxOD	 Lag
+    BA	bG_CM_Curdlan	1	0.58051	0.99619	0.95663	3.81167
+    BB	bG_CM_Curdlan	1	0.95791	1.00132	1.06304	0.92239
+    BI	bG_CM_Curdlan	1	0.36738	1.00039	0.64042	5.87481
+    BL	bG_CM_Curdlan	1	0.05150	0.88154	0.22626	5.57304
+    CC	bG_CM_Curdlan	1	0.81263	0.97210	0.73118	1.23433
+    LB	bG_CM_Curdlan	1	0.26471	0.98435	0.40863	0.97752
+    BA	bG_CM_Curdlan	2	0.62193	0.94212	0.95982	5.52649
+    BB	bG_CM_Curdlan	2	0.94277	1.02380	1.12968	1.50000
+    BI	bG_CM_Curdlan	2	0.41633	0.98179	0.62683	4.68000
+    BL	bG_CM_Curdlan	2	0.01210	0.12571	0.25063	5.32237
+    CC	bG_CM_Curdlan	2	0.80969	0.94329	0.71883	1.16384
+    ...
+    ----------
+    
+  Users coud use this normalized file as input 
+  or the orginal file as input for exploratory analysis
+  based on the objective of investigation.
+  
+  We recommended a normalization step.
+
+4) Explorative analysis - R installation
+  There are many different types of explorative analysis
+  and only some of them are list here as example.
+  Users could choose their favourite siftwares for the analysis.
+  Here, we use R Studio for analysis.
+  
+  Download R for macOS version (user could more updated version):
+  https://cran.rstudio.com/bin/macosx/R-3.5.2.pkg
+  Double click the installation icon to install.
+  
+  Download R Studio for macOS version (user could more updated version):
+  https://download1.rstudio.org/RStudio-1.1.463.dmg
+  Double click the installation icon to install.
+  
+  Open R Studio in the Application ot see if the program run well.
+  A command line interface can also be run to do the analysis,
+  but we recommended using R Studio as we could check the input and graphics easily.
+  
+  Users might see a different between their output
+  and the example output here
+  due to the order of row is different in the "combined.csv" file
+  but it will not affacted the overall analysis.
+
+5) Explorative analysis - Overall distribution
+  # directory setting and data loading
+  > setwd("/userDirectory/")
+  > combined <- read.csv("/userDirectory/combined.csv", stringsAsFactors=FALSE)
+  
+  # data check
+  > head(combined)
+    Strain  Carbohydrate Plate    Rate      R2 MaxOD   Lag
+    1         BI       Glucose     1 0.01116 0.99884 0.381 134.2
+    2         BI        Inulin     1 0.00894 0.98968 0.390 154.4
+    3         BI        bG_PCS     1 0.00116 0.77958 0.074 366.9
+    5         BI    bG_Curdlan     1 0.00797 0.99667 0.371 121.2
+    6         BI bG_CM_Curdlan     1 0.00410 0.99923 0.244 788.4
+  > tail(combined)
+    Strain  Carbohydrate Plate    Rate      R2 MaxOD   Lag
+    193         CC bG_CM_Curdlan     3 0.00235 0.90015 0.305 213.9
+    194         CC    bG_Control     3 0.00736 0.94102 0.302 421.3
+    195         CC   bG_Pachyman     3 0.00302 0.90083 0.387 166.9
+    196         CC  bG_Laminarin     3 0.00197 0.85866 0.421  45.9
+    197         CC           XOS     3 0.00762 0.99797 0.469 181.6
+    198         CC     Lactulose     3 0.00757 0.96919 0.353 290.6
+  > summary(combined)
+  
+  # to see th eoverall distribution of R2 value
+  > boxplot(combined$R2)
+  
+  # to see the correlation among Rate, MaxOD and Lag
+  > install.packages("PerformanceAnalytics")
+  > library("PerformanceAnalytics")
+  > my_data <- combined[, c(4,6,7)]
+  > chart.Correlation(my_data, histogram=TRUE, pch=19) 
+  
+  # to check the vale of Rate, MaxOD and Lag among the three plates
+  # we devided the data into three plates based on the row number as the row are arranged according to plate,
+  # user are required to double check their row number of the "combined.csv" file in order to get the data division correct.
+  # Rate of Plate 1, 2, and 3
+  > my_data2 <- merge(merge(as.data.frame(combined[1:45,c(1,2,4)]), as.data.frame(combined[46:90,c(1,2,4)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[91:135,c(1,2,4)]), by=c("Strain", "Carbohydrate"))
+  > colnames(my_data2) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
+  > chart.Correlation(my_data2[,c(3,4,5)], histogram=TRUE, pch=19)
+  # MaxOD of Plate 1, 2, and 3
+  > my_data3 <- merge(merge(as.data.frame(combined[1:45,c(1,2,6)]), as.data.frame(combined[46:90,c(1,2,6)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[91:135,c(1,2,6)]), by=c("Strain", "Carbohydrate"))
+  > colnames(my_data3) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
+  > chart.Correlation(my_data3[,c(3,4,5)], histogram=TRUE, pch=19)
+  # Lag of Plate 1, 2, and 3
+  > my_data4 <- merge(merge(as.data.frame(combined[1:45,c(1,2,7)]), as.data.frame(combined[46:90,c(1,2,7)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[91:135,c(1,2,7)]), by=c("Strain", "Carbohydrate"))
+  > colnames(my_data4) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
+  > chart.Correlation(my_data4[,c(3,4,5)], histogram=TRUE, pch=19)
+  
+6) Explorative analysis - Boxplots to check the distribution
+  > install.packages("ggplot2")
+  > library(ggplot2)
+
+  # boxplot of all the R2 value of all the 135 data points to check for curve-fitting
+  > boxplot(combined$R2)
+  
+  # overall distribution of Rate, MaxOD and Lag of all the 135 data points
+  > my_data <- combined[, c(4,6,7)]
+  > chart.Correlation(my_data, histogram=TRUE, pch=19)
+
+  # boxplot of Rate, MaxOD, and Lag against the 5 probiotic strains (fermentation ability of different bacteria)
+  # boxplot of Rate against the 5 probiotics
+  > ggplot(combined, aes(x=Strain, y=Rate, fill=Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  # boxplot of R2 against the 5 probiotics
+  > ggplot(combined, aes(x=Strain, y=MaxOD, fill=Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  # boxplot of Lag against the 5 probiotics
+  > ggplot(combined, aes(x=Strain, y=Lag, fill=Strain)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  
+  # boxplot of Rate against the 9 carbohydrates after normalized to glucose (fermentability of carbohydrates)
+  > ggplot(combined, aes(x=factor(Carbohydrate, levels = c("Lactulose", "XOS", "Inulin", "bG_Laminarin", "bG_Curdlan", "bG_CM_Curdlan", "bG_Pachyman", "bG_PCS", "bG_Control")), y=Rate, fill=Carbohydrate)) + geom_boxplot(alpha=0.3) + theme(legend.position="none")
+  
+7) Explorative analysis - Heatmap
+  # Heatmap does not allow samples of the same name,
+  # therefore, only the data of means of the 3 biological triplicate are used in heatmap.
+  
+  # we generate the matrix with mean first
+  > library(tidyverse)
+  > combined$x <- paste(combined$Strain,"-",combined$Carbohydrate)
+  # matrix with mean of Rate
+  > rate_only_mean <- combined[,c(4,8)] %>% group_by(x) %>% summarise(average = mean(Rate))
+  > head(rate_only_mean)
+  # A tibble: 6 x 2
+    x                  average
+    <chr>                <dbl>
+  1 BA - bG_CM_Curdlan   0.597
+  2 BA - bG_Control      0.778
+  3 BA - bG_Curdlan      0.831
+  4 BA - bG_Laminarin    0.792
+  5 BA - bG_Pachyman     0.845
+  6 BA - bG_PCS          0.252
+
+  > summary(rate_only_mean)
+      x                average       
+  Length:45          Min.   :0.02149  
+  Class :character   1st Qu.:0.58540  
+  Mode  :character   Median :0.79492  
+                     Mean   :0.78411  
+                     3rd Qu.:1.01809  
+                     Max.   :1.40690
+  # matrix with mean of MaxOD
+  > MaxOD_only_mean <- combined[,c(6,8)] %>% group_by(x) %>% summarise(average = mean(MaxOD))
+  # matrix with mean of Lag
+  > Lag_only_mean <- combined[,c(7,8)] %>% group_by(x) %>% summarise(average = mean(Lag))
+ 
+  # hierachically clustered heatmap generation using pheatmap
+  > install.packages("pheatmap")
+  > library(pheatmap)
+  # heatmap_rate of Rate
+  > rate_only_mean_long <- rate_only_mean %>% separate(x, c("Strain", "Carbohydrate"), "-")
+  > head(rate_only_mean_long)
+  # A tibble: 6 x 3
+    Strain Carbohydrate     average
+    <chr>  <chr>              <dbl>
+  1 "BA "  " bG_CM_Curdlan"   0.597
+  2 "BA "  " bG_Control"      0.778
+  3 "BA "  " bG_Curdlan"      0.831
+  4 "BA "  " bG_Laminarin"    0.792
+  5 "BA "  " bG_Pachyman"     0.845
+  6 "BA "  " bG_PCS"          0.252
+  > rate_only_mean_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(rate_only_mean_long, key = Strain, value = average))),var="Carbohydrate"))
+  > rate_only_mean_wide
+                       BA        BB        BI         BL        LB 
+   bG_CM_Curdlan 0.5966533 0.9899000 0.4191500 0.02149333 0.4376033
+   bG_Control    0.7784333 1.0065833 0.3493300 0.18428000 0.2452033
+   bG_Curdlan    0.8307467 1.0318533 0.7181433 0.83915333 1.3180733
+   bG_Laminarin  0.7923400 0.9295000 0.7616367 0.51149000 1.3448867
+   bG_Pachyman   0.8447967 1.0185667 0.9715567 0.79491667 0.7794000
+   bG_PCS        0.2524000 1.0799933 0.1951733 0.16012333 0.3794233
+   Inulin        0.7896333 0.9095467 0.7753367 0.58540333 1.1707233
+   Lactulose     1.2748200 1.0746633 1.3109500 1.40690000 1.1772000
+   XOS           0.8286633 1.0027800 0.7797400 0.59791667 1.0180900
+  # plot the heatmap using pheatmap package
+  > pheatmap(rate_only_mean_wide, border_color = NA, cellwidth = 40, cellheight=40, scale = "none", clustering_method = "ward.D2", fontsize = 20)
+  
+  # heatmap_rate of MaxOD
+  > MaxOD_only_mean_long <- MaxOD_only_mean %>% separate(x, c("Strain", "Carbohydrate"), "-")
+  > MaxOD_only_mean_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(MaxOD_only_mean_long, key = Strain, value = average))),var="Carbohydrate"))
+  > pheatmap(MaxOD_only_mean_wide, border_color = NA, cellwidth = 40, cellheight=40, scale = "none", clustering_method = "ward.D2", fontsize = 20)
+  
+  # heatmap_rate of Lag
+  > Lag_only_mean_long <- Lag_only_mean %>% separate(x, c("Strain", "Carbohydrate"), "-")
+  > Lag_only_mean_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(Lag_only_mean_long, key = Strain, value = average))),var="Carbohydrate"))
+  > pheatmap(Lag_only_mean_wide, border_color = NA, cellwidth = 40, cellheight=40, scale = "none", clustering_method = "ward.D2", fontsize = 20)
+
+
+
+8) Explorative analysis - Principle component analysis, PCA
+  # we use all the data point for PCA anlysis, i.e., not mean,
+  # and there a total of 135 observations used.
+  
+  # prepare the PCA input format
+  > combined$y <- paste(combined$Strain,"-",combined$Plate)
+  > combined$z <- paste(combined$Carbohydrate,"-",combined$Plate)
+  > library(tidyverse)
+  # prepare the PCA input matrix for Rate based on 9 carbohydrates
+  > all_rate_cho_long <- combined[,c(9,2,4)]
+  > head(all_rate_cho_long)
+         y  Carbohydrate    Rate
+  1 BA - 1 bG_CM_Curdlan 0.58051
+  2 BB - 1 bG_CM_Curdlan 0.95791
+  3 BI - 1 bG_CM_Curdlan 0.36738
+  4 BL - 1 bG_CM_Curdlan 0.05150
+  5 LB - 1 bG_CM_Curdlan 0.26471
+  6 BA - 1    bG_Control 0.69959
+  > all_rate_cho_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_rate_cho_long, key = Carbohydrate, value = Rate))),var="y"))
+  > head(all_rate_cho_wide)
+         bG_CM_Curdlan bG_Control bG_Curdlan bG_Laminarin bG_Pachyman  bG_PCS  Inulin Lactulose XOS
+  BA - 1       0.58051    0.69959    0.80650      0.80244     0.77808 0.15426 0.76319   1.25846 0.78349
+  BA - 2       0.62193    0.82160    0.89198      0.80524     0.94763 0.46318 0.84452   1.40589 1.03764
+  BA - 3       0.58752    0.81411    0.79376      0.76934     0.80868 0.13976 0.76119   1.16011 0.66486
+  BB - 1       0.95791    0.96662    0.94920      0.98839     0.97968 0.99419 0.99710   1.04790 1.03048
+  BB - 2       0.94277    0.89307    1.03916      0.75753     1.10392 1.14006 0.89307   1.28916 0.99548
+  BB - 3       1.06902    1.16006    1.10720      1.04258     0.97210 1.10573 0.83847   0.88693 0.98238
+  # prepare the PCA input matrix for MaxOD based on 9 carbohydrates
+  > all_MaxOD_cho_long <- combined[,c(9,2,6)]
+  > all_MaxOD_cho_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_MaxOD_cho_long, key = Carbohydrate, value = MaxOD))),var="y"))
+  # prepare the PCA input matrix for Lag based on 9 carbohydrates
+  > all_Lag_cho_long <- combined[,c(9,2,7)]
+  > all_Lag_cho_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_Lag_cho_long, key = Carbohydrate, value = Lag))),var="y"))
+  
+  # prepare the PCA input matrix for Rate based on 5 probiotic strains
+  > all_rate_strain_long <- combined[,c(10,1,4)]
+  > head(all_rate_strain_long)
+                    z Strain    Rate
+  1 bG_CM_Curdlan - 1     BA 0.58051
+  2 bG_CM_Curdlan - 1     BB 0.95791
+  3 bG_CM_Curdlan - 1     BI 0.36738
+  4 bG_CM_Curdlan - 1     BL 0.05150
+  5 bG_CM_Curdlan - 1     LB 0.26471
+  6    bG_Control - 1     BA 0.69959
+  > all_rate_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_rate_strain_long, key = Strain, value = Rate))),var="z"))
+  > head(all_rate_strain_wide)
+                         BA      BB      BI      BL      LB
+  bG_CM_Curdlan - 1 0.58051 0.95791 0.36738 0.05150 0.26471
+  bG_CM_Curdlan - 2 0.62193 0.94277 0.41633 0.01210 0.44602
+  bG_CM_Curdlan - 3 0.58752 1.06902 0.47374 0.00088 0.60208
+  bG_Control - 1    0.69959 0.96662 0.30197 0.08970 0.20242
+  bG_Control - 2    0.82160 0.89307 0.43571 0.21270 0.08319
+  bG_Control - 3    0.81411 1.16006 0.31031 0.25044 0.45000
+  # prepare the PCA input matrix for MaxOD based on 5 probiotic strains
+  > all_MaxOD_strain_long <- combined[,c(10,1,6)]
+  > all_MaxOD_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_MaxOD_strain_long, key = Strain, value = MaxOD))),var="z"))
+  # prepare the PCA input matrix for Lag based on 5 probiotic strains
+  > all_Lag_strain_long <- combined[,c(10,1,7)]
+  > all_Lag_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_Lag_strain_long, key = Strain, value = Lag))),var="z"))
+  
+  
+  # perform PCA biplot using factoextra
+  > install.packages("factoextra")
+  > library("factoextra")
+  
+  # Carbohydrates as loading
+  # Rate with all carbohydrates as loading
+  > p_Rate <- prcomp(all_rate_cho_wide, scale=TRUE)
+  > group <- c(rep("BA", times=3), rep("BB", times=3), rep("BI", times=3), rep("BL", times=3), rep("LB", times=3))
+  > fviz_pca_biplot(p_Rate, repel=TRUE, pointsize=6, pointshape=21, col.var="red", arrowsize=0.6, labelsize=5, col.ind=group, palette=c("green2", "gold", "skyblue2", "lightgray" , "plum1"), addEllipses=TRUE, ellipse.type="confidence")
+  # MaxOD with all carbohydartes as loading
+  > p_MaxOD <- prcomp(all_MaxOD_cho_wide, scale=TRUE)
+  > fviz_pca_biplot(p_MaxOD, repel=TRUE, pointsize=6, pointshape=21, col.var="red", arrowsize=0.6, labelsize=5, col.ind=group, palette=c("green2", "gold", "skyblue2", "lightgray" , "plum1"), addEllipses=TRUE, ellipse.type="confidence")
+  # Lag with all CHO as loading
+  > p_Lag <- prcomp(all_Lag_cho_wide, scale=TRUE)
+  > fviz_pca_biplot(p_Lag, repel=TRUE, pointsize=6, pointshape=21, col.var="red", arrowsize=0.6, labelsize=5, col.ind=group, palette=c("green2", "gold", "skyblue2", "lightgray" , "plum1"), addEllipses=TRUE, ellipse.type="confidence")
+
+  # probiotic strains as loading
+  # Rate with all Strain as loading
+  > p_Rate_2 <- prcomp(all_rate_strain_wide, scale=TRUE)
+  > group_strain <- c(rep("bG_CM_Curdlan", times=3), rep("bG_Control ", times=3), rep("bG_Curdlan ", times=3), rep("bG_Laminarin", times=3), rep("bG_Pachyman", times=3),rep("bG_PCS", times=3), rep("Inulin", times=3), rep("Lactulose", times=3), rep("XOS", times=3))
+  > fviz_pca_biplot(p_Rate_2, repel=TRUE, pointsize=6, pointshape=21, col.var="red", arrowsize=0.6, labelsize=5, col.ind=group_strain, palette="Set3", addEllipses=TRUE, ellipse.type="confidence")
+  # MaxOD with all Strain as loading
+  > p_MaxOD_2 <- prcomp(all_MaxOD_strain_wide, scale=TRUE)
+  > fviz_pca_biplot(p_MaxOD_2, repel=TRUE, pointsize=6, pointshape=21, col.var="red", arrowsize=0.6, labelsize=5, col.ind=group_strain, palette="Set3", addEllipses=TRUE, ellipse.type="confidence")
+  # Lag with all Strain as loading
+  > p_Lag_2 <- prcomp(all_Lag_strain_wide, scale=TRUE)
+  > fviz_pca_biplot(p_Lag_2, repel=TRUE, pointsize=6, pointshape=21, col.var="red", arrowsize=0.6, labelsize=5, col.ind=group_strain, palette="Set3", addEllipses=TRUE, ellipse.type="confidence")
+
+EOF
