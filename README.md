@@ -1,6 +1,8 @@
 # OVAMO_CUHK
-Software development for the OVAMO system for anaerobic microbial culture using 96 well plate:
-an online tutorial with raw data, examples and codes.
+Online tutorial for structure-property relationship investigation using random forest analysis.
+
+The tutorial adopted the OVAMO system for anaerobic microbial culture using 96 well plate,
+with raw data, examples and codes provided.
 
 As for query and bug report, please contact:
 cufns_kocas@link.cuhk.edu.hk or kocaslam@gmail.com
@@ -11,7 +13,7 @@ Please respect copy-right and cite the sources of softwares and codes used appro
 Please cite this online tutorial as:
   Ka-Lung LAM. 2019. Software development for the OVAMO system for anaerobic microbial culture using 96 well plate. https://github.com/kocaslam/OVAMO_CUHK/.
 
-Codes used for the explortive analysis of fermentation,
+Codes used for the exploratory analysis of fermentation,
 such as probiotics prebotics fermetnation to investigation
 new prebiotics and engineer new probiotics strains.
 
