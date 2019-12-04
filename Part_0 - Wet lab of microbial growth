@@ -1,12 +1,13 @@
-Part I - Wet lab of microbial growth
+Part 0 - Wet lab of microbial growth
 
-The OVAMO system was adapted.
+The OVAMO system was adapted as example. But it is not fixed.
+User could use other instrumental systems/protocol to obtain the kinetc data.
 
 Sterile 96 well plates are needed.
 
 Fermentation mixture include:
 1) 100 µL of modified Medium for Colonic Bacteria, mMCB
-2) Individual carbohydrates (a total of 11 carbohydrates) at a final concentration of 1% (w/v)
+2) Individual carbohydrates at a final concentration of 2% (w/v)
 3) 2% individual bacterial inoculum
 4) 2% OxyraseR was added to each well
 
