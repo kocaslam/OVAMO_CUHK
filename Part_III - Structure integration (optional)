@@ -2,23 +2,26 @@ Part IV - Structure integration (optional)
 
 This part is meant for the integration analysi with structure data available.
 Structural importance of different structural features was accessed by random forest analysis.
-It allows a comparable indicaotr among different structural features that are not themselves comparable.
+It allows a comparable indicaotr among different structural features that are not themselves originally comparable.
 
-Structure data can be from different chemical/instrumental analysis, for example:
-  1) total carbohydrate;
-  2) total protein;
+Structure data can be from different chemical/instrumental analysis,
+for example:
+  1) total carbohydrate percentage;
+  2) total protein percentage;
   3) molecular weight from HPLC;
   4) mono-saccharide composition;
-  5) linkage of polymer chain;
-  6) special function groups
+  5) glcosidic linkage of polymer chain;
+  6) special function group addition (yes/no)
   7) solubility
   ...
-  
+ 
 The choice of structural features are unlimited and greatly depends on the users' objectives
-and the abolity to locae novel structural features.
-Since random forest is a machine learning algorithm, it requires domain knpwledge for feature generation.
+and the abolity to locate novel structural features that are useful for futrther investigation.
+Since random forest is a machine learning algorithm, it requires domain knowledge for feature generation.
 
-These data can also be integrated into the analysis with growth characteristics. including:
+Here, we employed what we have in the previous analysis of carbohydrate-probiotic fermentation.
+The structural data were integrated into the analysis with the growth characteristics,
+including:
   1) lag phase;
   2) maximum growth rate;
   3) maximum population increase.
@@ -49,6 +52,7 @@ Users could open the file and get their data input similarly.
   # users need to set their own directory correctly
   > setwd("/dataDirectory/")
   > structureMatrix <- read.csv("/dataDirectory/structureMatrix_bGonly.csv", row.names=NULL)
+  
   # and the file look like
   > head(structureMatrix_bGonly_noCC)
     Strain  Carbohydrate Plate    Rate      R2   MaxOD     Lag     X.CHO  X.N   X.C    X.S monomerCount MW_count MW_highest linkageCount functionCount solubility
@@ -98,6 +102,8 @@ Users could open the file and get their data input similarly.
         X.CHO       0       90 90   0.91    0.078  0.74      0.93   0.95    0.96   0.97 ▂▁▁▁▁▁▅▇
           X.N       0       90 90   0.49    1.11   0         0      0       0      2.95 ▇▁▁▁▁▁▁▂
           X.S       0       90 90   0.073   0.11   0         0      0.015   0.11   0.29 ▇▁▁▂▁▁▁▂
+  
+  
   # Similarly, Subset MaxOD
   > subset_MaxOD <- subset(structureMatrix_bGonly, select=-c(Strain, Carbohydrate, Plate, Rate, R2, Lag))
   > head(subset_MaxOD)
@@ -120,6 +126,8 @@ Users could open the file and get their data input similarly.
         X.CHO       0       90 90   0.91    0.078  0.74   0.93   0.95    0.96   0.97 ▂▁▁▁▁▁▅▇
           X.N       0       90 90   0.49    1.11   0      0      0       0      2.95 ▇▁▁▁▁▁▁▂
           X.S       0       90 90   0.073   0.11   0      0      0.015   0.11   0.29 ▇▁▁▂▁▁▁▂
+  
+  
   # And similarly, Subset Lag
   > subset_Lag <- subset(structureMatrix_bGonly_noCC, select=-c(Strain, Carbohydrate, Plate, Rate, R2, MaxOD))
   > head(subset_Lag)
@@ -146,13 +154,17 @@ Users could open the file and get their data input similarly.
   
   
 4) Random forest analysis to retrieve structural importance to growth parameters (Rate, MaxOD, abd Lag)
-  # As for the random forest analysis, users could also do an optimizatiob to the hyper-parameters
+  # As for the random forest analysis, users could also do an optimization to the hyper-parameters
   # such as "mtry", "ntree" using the package "caret".
+  # Optimization methods inlcude grid search and/or random search.
   # Optimization of hyper-parameters take time and the improvement might not be very prominents.
-  # Here, we only demonstrated the most basic use of random forest analysis without optimization.
+  # Since our dataset is small, here, we only demonstrated the most basic use of random forest analysis
+  # without hyper-parameter optimization.
   
-  # RandomForest_Rate
+  # Random forest analysis on Rate against different structural features
+  # Build random forest model with 1000 trees
   > Rate.rf <- randomForest(Rate~., data = subset_Rate, importance = TRUE, proximity = TRUE, ntree = 1000, replace = TRUE) 
+  # Check the rf model
   > Rate.rf
   Call:
   randomForest(formula = Rate ~ ., data = subset_Rate, importance = TRUE,      proximity = TRUE, ntree = 1000, replace = TRUE) 
@@ -161,7 +173,9 @@ Users could open the file and get their data input similarly.
   No. of variables tried at each split: 3
             Mean of squared residuals: 0.09621044
                       % Var explained: 26.31
+  # Check error with increaseing number of trees added to forest
   > plot(Rate.rf)
+  # Obtain the relative importance of different structural features, both Type I and Type II
   > importance(Rate.rf, type=1)
                   %IncMSE
   X.CHO         29.608817
@@ -190,13 +204,15 @@ Users could open the file and get their data input similarly.
   solubility       0.36231524
   > Rate.rf_2 <- importance(Rate.rf, type=2)
   > write.csv(Rate.rf_2, file = "Rate.rf_2.csv",row.names=TRUE)
-  # plot the two different variable  importance measure
+  # plot the two different variable importance measure
   # users could choose an appropriately importance measures based on their objectives
   > varImpPlot(Rate.rf)
   
-5)  random forests analysis of MaxOD against different structural features
+5) Random forests analysis of MaxOD against different structural features
   #RandomForest_MaxOD
+  # Build random forest model with 1000 trees
   > MaxOD.rf <- randomForest(MaxOD~., data = subset_MaxOD, importance = TRUE, proximity = TRUE, ntree = 1000, replace = TRUE)
+  # Check the rf model
   > MaxOD.rf
   Call:
   randomForest(formula = MaxOD ~ ., data = subset_MaxOD, importance = TRUE,      proximity = TRUE, ntree = 1000, replace = TRUE) 
@@ -205,7 +221,9 @@ Users could open the file and get their data input similarly.
   No. of variables tried at each split: 3
             Mean of squared residuals: 0.06981258
                       % Var explained: 40.5
+  # Check error with increaseing number of trees added to forest
   > plot(MaxOD.rf)
+  # Obtain the relative importance of different structural features, both Type I and Type II
   > importance(MaxOD.rf, type=1)
                   %IncMSE
   X.CHO         28.475565
@@ -234,11 +252,15 @@ Users could open the file and get their data input similarly.
   solubility       0.76192727
   > MaxOD.rf_2 <- importance(MaxOD.rf, type=2)
   > write.csv(MaxOD.rf_2, file = "MaxOD.rf_2.csv",row.names=TRUE)
+  # plot the two different variable importance measure
+  # users could choose an appropriately importance measures based on their objectives
   > varImpPlot(MaxOD.rf)
 
-6)  random forests analysis of Lag against different structural features
+6) Random forests analysis of Lag against different structural features
   #RandomForest_Lag
+  # Build random forest model with 1000 trees
   > Lag.rf <- randomForest(Lag~., data = subset_Lag, importance = TRUE, proximity = TRUE, ntree = 1000, replace = TRUE)
+  # Check the rf model
   > Lag.rf
   Call:
   randomForest(formula = Lag ~ ., data = subset_Lag, importance = TRUE,      proximity = TRUE, ntree = 1000, replace = TRUE) 
@@ -247,7 +269,9 @@ Users could open the file and get their data input similarly.
   No. of variables tried at each split: 3
             Mean of squared residuals: 2.850568
                       % Var explained: 27.15
+  # Check error with increaseing number of trees added to forest
   > plot(Lag.rf)
+  # Obtain the relative importance of different structural features, both Type I and Type II
   > importance(Lag.rf, type=1)
                   %IncMSE
   X.CHO         30.791200
@@ -276,6 +300,8 @@ Users could open the file and get their data input similarly.
   solubility        10.111967
   > Lag.rf_2 <- importance(Lag.rf, type=2)
   > write.csv(Lag.rf_2, file = "Lag.rf_2.csv",row.names=TRUE)
+  # plot the two different variable importance measure
+  # users could choose an appropriately importance measures based on their objectives
   > varImpPlot(Lag.rf)
 
 7) Modification direction of selected structural features by Pearson' correlation.
