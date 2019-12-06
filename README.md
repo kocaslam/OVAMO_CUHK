@@ -11,7 +11,7 @@ The online tutorial also involved other open-source softwares.
 Please respect copy-right and cite the sources of softwares and codes used appropriately.
 
 Please cite this online tutorial as:
-  Ka-Lung LAM. 2019. Software development for the OVAMO system for anaerobic microbial culture using 96 well plate. https://github.com/kocaslam/OVAMO_CUHK/.
+XXX
 
 Codes used for the exploratory analysis of fermentation,
 such as probiotics prebotics fermetnation to investigation
