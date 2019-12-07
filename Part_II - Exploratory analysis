@@ -1,10 +1,11 @@
 Part II - Exploratory analysis
 
 1) Data acquistion
-  The three ouput files from step II (Part II - Growth characteristics): 
-  formattedData1.summary
-  formattedData2.summary
-  formattedData3.summary
+  The three ouput files from previous step of "GrowthRate" analysis
+  (Part I - Growth characteristics): 
+    formattedData1.summary
+    formattedData2.summary
+    formattedData3.summary
   are the output files we needed for next step analysis.
   
 2) Data merge and re-formatting
@@ -46,25 +47,29 @@ Part II - Exploratory analysis
     ----------
   This files could be used for the explorative analysis.
   
-  Users could also do a filtering to the data and/or transformation of data
-  to gather a final input table for exploratory analysis.
+  Users could also do a filtering step to the data and/or transformation to the data
+  bsed on their objectives/analysis consideration
+  to gather the final input table for exploratory analysis in R.
   
   Here, we provide an example file named "combined.csv":
-  it include the raw data of the
-  a) 5 bacteria;
-  b) 10 carbohydrates; and
-  c) 3 plates.
+  it include the re-arranged raw OD600 data of the
+  a) 5 probiotic bacteria;
+  b) 10 carbohydrates as sole added carbon sources; and
+  c) 3 plates as biological triplicates
+     (each plate having the 5 x 10 combinations and the control well(s)).
   
 3) Data normalization (optional)
   This step is optional, as normalization might be necessary,
   depends on the objectives of analysis.
-  Here, we normalized all the data (Rate, R2, MaxOD, Lag)
-  of the 10 carbohydrates based on the value of glucose respectively.
-  It is easily doen in excel using the "=A4/$B$4",
-  assuming the A4 is the other 19 carbohydrates and B4 is glucose value.
+  But this normalization step will not greatly affect the random forest analysis.
   
-  This normalization should be done separatly on each plate and to each combination of bacteria.
-  After normalization, the glucose value is 1 and all the glucose value are removed.
+  Here, we normalized all the data (Rate, MaxOD, Lag)
+  of the 10 carbohydrates based on the value of glucose (Glc) respectively.
+  It is easily doen in excel using the "=A4/$B$4",
+  assuming the A4 is the other 9 carbohydrates and B4 is glucose value.
+  
+  ***This normalization should be done separatly on each plate and to each combination of bacteria.
+  After normalization, the glucose value is 1 and all the glucose values are removed.
   
   The final normalized re-formatted input file look as:
     ----------
@@ -88,31 +93,36 @@ Part II - Exploratory analysis
   based on the objective of investigation.
   
   We recommended a normalization step.
+  And we used the normalized data as input for exploratory analysis.
 
 4) Explorative analysis - R installation
-  There are many different types of explorative analysis
-  and only some of them are list here as example.
-  Users could choose their favourite siftwares for the analysis.
-  Here, we use R Studio for analysis.
+   There are many different types of explorative analysis
+   and only some of them are list here as example.
+   Users could choose their favourite softwares for the analysis.
+   
+   Here, we use R Studio for analysis.
   
-  Download R for macOS version (user could more updated version):
-  https://cran.rstudio.com/bin/macosx/R-3.5.2.pkg
-  Double click the installation icon to install.
+   Download R for macOS version (user could more updated version):
+   https://mirror-hk.koddos.net/CRAN/bin/macosx/R-3.6.1.pkg
+   Double click the installation icon to install.
   
-  Download R Studio for macOS version (user could more updated version):
-  https://download1.rstudio.org/RStudio-1.1.463.dmg
-  Double click the installation icon to install.
+   Download R Studio for macOS version (user could more updated version):
+   https://download1.rstudio.org/desktop/macos/RStudio-1.2.5019.dmg
+   Double click the installation icon to install.
+   
+   Please check the version matching between R and R-studio.
+   
+   Open R Studio in the Application ot see if the program run well.
+   A command line interface can also be run in terminal to do the analysis,
+   but we recommended using R Studio as we could check the input and graphics easily.
   
-  Open R Studio in the Application ot see if the program run well.
-  A command line interface can also be run to do the analysis,
-  but we recommended using R Studio as we could check the input and graphics easily.
-  
-  Users might see a different between their output
-  and the example output here
-  due to the order of row is different in the "combined.csv" file
-  but it will not affacted the overall analysis.
+   Users might see a different between their output
+   and the example output here
+   due to the order of row is different in the "combined.csv" file
+   but it will not affacted the overall exploratory analysis.
 
 5) Explorative analysis - Overall distribution
+  # in R-Studio console
   # directory setting and data loading
   > setwd("/userDirectory/")
   > combined <- read.csv("/userDirectory/combined.csv", stringsAsFactors=FALSE)
@@ -151,10 +161,12 @@ Part II - Exploratory analysis
   > my_data2 <- merge(merge(as.data.frame(combined[1:45,c(1,2,4)]), as.data.frame(combined[46:90,c(1,2,4)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[91:135,c(1,2,4)]), by=c("Strain", "Carbohydrate"))
   > colnames(my_data2) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
   > chart.Correlation(my_data2[,c(3,4,5)], histogram=TRUE, pch=19)
+  
   # MaxOD of Plate 1, 2, and 3
   > my_data3 <- merge(merge(as.data.frame(combined[1:45,c(1,2,6)]), as.data.frame(combined[46:90,c(1,2,6)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[91:135,c(1,2,6)]), by=c("Strain", "Carbohydrate"))
   > colnames(my_data3) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
   > chart.Correlation(my_data3[,c(3,4,5)], histogram=TRUE, pch=19)
+  
   # Lag of Plate 1, 2, and 3
   > my_data4 <- merge(merge(as.data.frame(combined[1:45,c(1,2,7)]), as.data.frame(combined[46:90,c(1,2,7)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[91:135,c(1,2,7)]), by=c("Strain", "Carbohydrate"))
   > colnames(my_data4) <- c("Strain","Carbohydrate","Plate_1", "Plate_2","Plate_3")
@@ -265,6 +277,7 @@ Part II - Exploratory analysis
   > combined$y <- paste(combined$Strain,"-",combined$Plate)
   > combined$z <- paste(combined$Carbohydrate,"-",combined$Plate)
   > library(tidyverse)
+  
   # prepare the PCA input matrix for Rate based on 9 carbohydrates
   > all_rate_cho_long <- combined[,c(9,2,4)]
   > head(all_rate_cho_long)
@@ -284,9 +297,11 @@ Part II - Exploratory analysis
   BB - 1       0.95791    0.96662    0.94920      0.98839     0.97968 0.99419 0.99710   1.04790 1.03048
   BB - 2       0.94277    0.89307    1.03916      0.75753     1.10392 1.14006 0.89307   1.28916 0.99548
   BB - 3       1.06902    1.16006    1.10720      1.04258     0.97210 1.10573 0.83847   0.88693 0.98238
+  
   # prepare the PCA input matrix for MaxOD based on 9 carbohydrates
   > all_MaxOD_cho_long <- combined[,c(9,2,6)]
   > all_MaxOD_cho_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_MaxOD_cho_long, key = Carbohydrate, value = MaxOD))),var="y"))
+  
   # prepare the PCA input matrix for Lag based on 9 carbohydrates
   > all_Lag_cho_long <- combined[,c(9,2,7)]
   > all_Lag_cho_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_Lag_cho_long, key = Carbohydrate, value = Lag))),var="y"))
@@ -310,15 +325,17 @@ Part II - Exploratory analysis
   bG_Control - 1    0.69959 0.96662 0.30197 0.08970 0.20242
   bG_Control - 2    0.82160 0.89307 0.43571 0.21270 0.08319
   bG_Control - 3    0.81411 1.16006 0.31031 0.25044 0.45000
+  
   # prepare the PCA input matrix for MaxOD based on 5 probiotic strains
   > all_MaxOD_strain_long <- combined[,c(10,1,6)]
   > all_MaxOD_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_MaxOD_strain_long, key = Strain, value = MaxOD))),var="z"))
+  
   # prepare the PCA input matrix for Lag based on 5 probiotic strains
   > all_Lag_strain_long <- combined[,c(10,1,7)]
   > all_Lag_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_Lag_strain_long, key = Strain, value = Lag))),var="z"))
   
   
-  # perform PCA biplot using factoextra
+  # perform PCA biplot using "factoextra" package
   > install.packages("factoextra")
   > library("factoextra")
   
@@ -345,5 +362,7 @@ Part II - Exploratory analysis
   # Lag with all Strain as loading
   > p_Lag_2 <- prcomp(all_Lag_strain_wide, scale=TRUE)
   > fviz_pca_biplot(p_Lag_2, repel=TRUE, pointsize=6, pointshape=21, col.var="red", arrowsize=0.6, labelsize=5, col.ind=group_strain, palette="Set3", addEllipses=TRUE, ellipse.type="confidence")
+
+
 
 EOF
