@@ -12,9 +12,9 @@ Structure data can be from different chemical/instrumental analysis,
 for example:
   1) total carbohydrate percentage;
   2) total protein percentage;
-  3) molecular weight from HPLC;
+  3) molecular weight distribution from HPLC;
   4) mono-saccharide composition;
-  5) glcosidic linkage of polymer chain;
+  5) glcosidic linkage;
   6) special function group addition (yes/no)
   7) solubility
   ...
@@ -24,7 +24,7 @@ and the abolity to locate novel structural features that are useful for futrther
 Since random forest is a machine learning algorithm, it requires domain knowledge for feature generation.
 
 Here, we employed what we have in the previous analysis of carbohydrate-probiotic fermentation.
-The structural data were integrated into the analysis with the growth characteristics,
+The structural data were integrated into the analysis with the growth parameters,
 including:
   1) lag phase;
   2) maximum growth rate;
@@ -33,20 +33,21 @@ including:
 Integration analysis could be done in different ways.
 Mainly, a machine learning approach is taken.
 As new algorithm is being pushed out and old algorithm is being updated,
-users could choose their suitable analysis method.
+users could choose their suitable analysis algorithm,
+such as other machine learning methods.
 
-Here, we demostrtaed how it is done using the random forest in R.
-Here, we provide an example by extracting only a particular type of carbohydrate
+Here, we demostrtaed how it is done using the "RandomForest" package in R.
+We provide an example by extracting only a particular type of carbohydrate
 from the tutorial in Part_I and Part_II.
-The extracted carbohydrate was beta-glucans.
-This help finding the relative importance of different structural features of beat-glucans.
+The extracted carbohydrate was beta-glucans, a beta-linked glucose polymeric carbohydrates.
+This help finding the relative importance of different structural features of just beat-glucans only.
 
 Users could also try to use the growth parameters of all the 9 carbohydrates for random forest analysis,
 and it will allow a more diverse structural features to be compared.
 
 Users are required to combine the both the growth parameters and structural features
-into one input fiel for random forest analysis manually
-and double check for correctness.
+into one input file for random forest analysis.
+We suggest doing this manually and double check for input correctness.
 
 We provide an example file named "structureMatrix_bGonly.csv".
 Users could open the file and get their data input similarly.
@@ -69,7 +70,7 @@ Users could open the file and get their data input similarly.
   # users could also get a summary of the extracted data of beta-glucans only
   > summary(structureMatrix_bGonly)
  
-2) Software download and installation
+2) Package installation and loading
   > install.packages("skimr")
   > library(skimr)
   > install.packages("randomForest")
@@ -79,6 +80,7 @@ Users could open the file and get their data input similarly.
   # sample subset for Rate, MaxOD and Lag based on the input file "structureMatrix_bGonly.csv"
   # Subset of Rate
   > subset_Rate <- subset(structureMatrix_bGonly, select=-c(Strain, Carbohydrate, Plate, R2, MaxOD, Lag))
+  # Check to see if there is Rate only
   > head(subset_Rate)
        Rate     X.CHO  X.N   X.C    X.S monomerCount MW_count MW_highest linkageCount functionCount solubility
   1 0.58051 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
@@ -87,6 +89,7 @@ Users could open the file and get their data input similarly.
   4 0.05150 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
   5 0.26471 0.9277238 0.00 36.50 0.0000            1        1   275.3285            1             1          2
   6 0.69959 0.7436506 2.95 44.54 0.1135            4        2   394.1922            3             0          1
+  # Get an overall distribution of all data in the sub-set of Rate
   > skim(subset_Rate)
   Skim summary statistics
    n obs: 90 
@@ -132,7 +135,7 @@ Users could open the file and get their data input similarly.
           X.S       0       90 90   0.073   0.11   0      0      0.015   0.11   0.29 ▇▁▁▂▁▁▁▂
   
   
-  # And similarly, Subset Lag
+  # And again similarly, Subset Lag
   > subset_Lag <- subset(structureMatrix_bGonly_noCC, select=-c(Strain, Carbohydrate, Plate, Rate, R2, MaxOD))
   > head(subset_Lag)
   > skim(subset_Lag)
@@ -157,13 +160,13 @@ Users could open the file and get their data input similarly.
 
   
   
-4) Random forest analysis to retrieve structural importance to growth parameters (Rate, MaxOD, abd Lag)
-  # As for the random forest analysis, users could also do an optimization to the hyper-parameters
+4) Random forest analysis to retrieve importance of different structural features on growth parameters (Rate, MaxOD, and Lag)
+  # As for the random forest analysis, users could also do an extra optimization procedure to the hyper-parameters
   # such as "mtry", "ntree" using the package "caret".
-  # Optimization methods inlcude grid search and/or random search.
+  # Optimization methods inlcude grid search or random search.
   # Optimization of hyper-parameters take time and the improvement might not be very prominents.
   # Since our dataset is small, here, we only demonstrated the most basic use of random forest analysis
-  # without hyper-parameter optimization.
+  # without hyper-parameter optimization, still giving sufficient insights.
   
   # Random forest analysis on Rate against different structural features
   # Build random forest model with 1000 trees
@@ -308,13 +311,15 @@ Users could open the file and get their data input similarly.
   # users could choose an appropriately importance measures based on their objectives
   > varImpPlot(Lag.rf)
 
-7) Modification direction of selected structural features by Pearson' correlation.
+7) Modification direction of selected structural features by classical Pearson's correlation.
   # After determined some of the top strcutral feeatures that gave higher importance value using random forest analysis,
   # we would like to check the direction of change of structural features to the three growth parameters
-  # in order to understand which modification should we perform, e.g., increase/decrease the molecualr weight ...
-  # Here, we used Pearson's correlation, how times, regression migth be more usesful as the relationship might not be linear.
+  # in order to understand which modification should we perform,
+  # e.g., increase/decrease the structural features (such as molecualr weight ...)
+  # Here, we used Pearson's correlation, however sometimes, regression migth be more usesful as the relationship might not be linear.
   # we extracted the top features and provide an example file as "correlation.csv".
-  # User could use their own method in doing Pearson's correlation.
+  # User could use their own judgement for top several featrues and use different softwares in doing Pearson's correlation.
+  # We stick to R.
   
   # correlation after random forest top feature selection
   # load input file
@@ -322,11 +327,11 @@ Users could open the file and get their data input similarly.
   > correlation <- read.csv("/dataDirectory/correlation.csv", stringsAsFactors=FALSE)
  
   # load library
-  library(ggplot2)
+  > library(ggplot2)
 
   ########################################
   # We start with molecualr weight
-  #Rate_vs_MW
+  # Rate_vs_MW
   > ggplot(correlation, aes(x=MW_log, y=Rate)) + scale_x_continuous(limits=c(0,3)) + scale_y_continuous(limits=c(0, 1.8)) + geom_jitter(width=0.3, size=1, shape=1, color="steelblue", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Rate, correlation$MW_log)
 	  Pearson's product-moment correlation
@@ -339,7 +344,7 @@ Users could open the file and get their data input similarly.
         cor 
   -0.2195133 
 
-  #MaxOD_vs_MW
+  # MaxOD_vs_MW
   > ggplot(correlation, aes(x=MW_log, y=MaxOD)) + scale_x_continuous(limits=c(0,3.2)) + scale_y_continuous(limits=c(0, 1.5))  + geom_jitter(width=0.3, size=1, shape=1, color="steelblue", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$MaxOD, correlation$MW_log)
 	  Pearson's product-moment correlation
@@ -352,7 +357,7 @@ Users could open the file and get their data input similarly.
          cor 
   -0.2676884 
 
-  #Lag_vs_MW
+  # Lag_vs_MW
   > ggplot(correlation, aes(x=MW_log, y=Lag)) + scale_x_continuous(limits=c(0,3.2)) + scale_y_continuous(limits=c(0, 8.5))  + geom_jitter(width=0.3, size=1, shape=1, color="steelblue", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Lag, correlation$MW_log)
     Pearson's product-moment correlation
@@ -367,7 +372,7 @@ Users could open the file and get their data input similarly.
 
   ########################################
   # Then we check percentage of carbohydarte
-  #Rate_vs_%CHO
+  # Rate_vs_%CHO
   > ggplot(correlation, aes(x=X.CHO, y=Rate)) + scale_x_continuous(limits=c(0.7,1)) + scale_y_continuous(limits=c(0, 1.75))  + geom_jitter(width=0.03, size=1, shape=1, color="seagreen", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Rate, correlation$X.CHO)
 	  Pearson's product-moment correlation
@@ -380,7 +385,7 @@ Users could open the file and get their data input similarly.
         cor 
   0.3065696 
 
-  #MaxOD_vs_%CHO
+  # MaxOD_vs_%CHO
   > ggplot(correlation, aes(x=X.CHO, y=MaxOD)) + scale_x_continuous(limits=c(0.7,1)) + scale_y_continuous(limits=c(0, 1.5))  + geom_jitter(width=0.03, size=1, shape=1, color="seagreen", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$MaxOD, correlation$X.CHO)
 	  Pearson's product-moment correlation
@@ -393,7 +398,7 @@ Users could open the file and get their data input similarly.
         cor 
   0.2894843 
 
-  #Lag_vs_%CHO
+  # Lag_vs_%CHO
   > ggplot(correlation, aes(x=X.CHO, y=Lag)) + scale_x_continuous(limits=c(0.7,1)) + scale_y_continuous(limits=c(0, 9))  + geom_jitter(width=0.03, size=1, shape=1, color="seagreen", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Lag, correlation$X.CHO)
 	  Pearson's product-moment correlation
@@ -408,7 +413,7 @@ Users could open the file and get their data input similarly.
 
   ########################################
   # then we check solubility
-  #Rate_vs_sol
+  # Rate_vs_sol
   > ggplot(correlation, aes(x=solubility, y=Rate)) + scale_x_continuous(limits=c(-0.2,2.2)) + scale_y_continuous(limits=c(-0.1, 1.85))  + geom_jitter(width = 0.15, size=1, shape=1, color="purple", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Rate, correlation$solubility)
 	  Pearson's product-moment correlation
@@ -421,7 +426,7 @@ Users could open the file and get their data input similarly.
         cor 
   0.1754699 
 
-  #MaxOD_vs_sol
+  # MaxOD_vs_sol
   > ggplot(correlation, aes(x=solubility, y=MaxOD)) + scale_x_continuous(limits=c(-0.2,2.2)) + scale_y_continuous(limits=c(0, 1.35))  + geom_jitter(width = 0.15, size=1, shape=1, color="purple", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$MaxOD, correlation$solubility)
 	  Pearson's product-moment correlation
@@ -434,7 +439,7 @@ Users could open the file and get their data input similarly.
        cor 
   0.3357778
 
-  #Lag_vs_sol
+  # Lag_vs_sol
   > ggplot(correlation, aes(x=solubility, y=Lag)) + scale_x_continuous(limits=c(-0.2,2.2)) + scale_y_continuous(limits=c(0, 8.5))  + geom_jitter(width = 0.15, size=1, shape=1, color="purple", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Lag, correlation$solubility)
 	  Pearson's product-moment correlation
@@ -449,7 +454,7 @@ Users could open the file and get their data input similarly.
 
   ########################################
   # Finally, we check the functional group addition as carboxymethylation
-  #Rate_vs_functional group
+  # Rate_vs_functional group
   > ggplot(correlation, aes(x=funct, y=Rate)) + scale_x_continuous(limits=c(-0.2, 1.2)) + scale_y_continuous(limits=c(-0.1, 1.65))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Rate, correlation$funct)
 	  Pearson's product-moment correlation
@@ -462,7 +467,7 @@ Users could open the file and get their data input similarly.
          cor 
   -0.2390396 
 
-  #MaxOD_vs_sol
+  # MaxOD_vs_sol
   > ggplot(correlation, aes(x=funct, y=MaxOD)) + scale_x_continuous(limits=c(-0.2,1.2)) + scale_y_continuous(limits=c(0, 1.35))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$MaxOD, correlation$funct)
 	  Pearson's product-moment correlation
@@ -475,7 +480,7 @@ Users could open the file and get their data input similarly.
         cor 
   -0.1722879
 
-  #Lag_vs_sol
+  # Lag_vs_sol
   > ggplot(correlation, aes(x=funct, y=Lag)) + scale_x_continuous(limits=c(-0.2,1.2)) + scale_y_continuous(limits=c(0, 8.5))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Lag, correlation$funct)
 	  Pearson's product-moment correlation
