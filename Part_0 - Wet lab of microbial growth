@@ -1,43 +1,63 @@
 Part 0 - Wet lab of microbial growth
 
-The OVAMO system was adapted as example. But it is not fixed.
+The OVAMO system (in situ anaerobic gneration directly on 96 well plate)
+was adapted as example kinetic OD600 measirement.
+But it is not fixed.
+
 User could use other instrumental systems/protocol to obtain the kinetc data.
+Some reminder are listed as follow:
 
+1)
+Users need to need to ensure a fine enough time-points
+for data collection in order to have succesfful curve-fitting.
+
+2)
 Sterile 96 well plates are needed.
+Users could use other well plate system compatible with their instruments.
 
-Fermentation mixture include:
-1) 100 µL of modified Medium for Colonic Bacteria, mMCB
-2) Individual carbohydrates at a final concentration of 1% (w/v)
-3) 2% individual bacterial inoculum
-4) 2% OxyraseR was added to each well
+3)
+In OVAMO system, the fermentation mixture include
+(users could optimize the concentration and volume):
+1) 100 µL of modified Medium for Colonic Bacteria, mMCB;
+2) Individual carbohydrates at a final concentration of 1% (w/v);
+3) 2% individual bacterial inoculum; and,
+4) 2% OxyraseR was added to each well.
 
+4)
 96 well plate + fermentation mixture
 -> vacuum (70 cmHg) to de-gas for 5 minutes to remove any bubbles formed and dissolved gas;
 -> 100 µL of sterilized mineral oil was carefully overlaid in each well.
 
-This system used the enzyme (biological) and vacuume & mineral oil (physical)
+This system used the enzyme (biological method) and vacuume & mineral oil (physical method)
 to generate in situ anaerobic condition directly on the wells in 96-well plate.
+The plate can then be used in open atmosphere for at least 48 hours.
 
+5)
 Blank control wells without bacteria and carbohydrate sources
 were also included to check for the sterility of the medium.
 Negative control wells were also included.
 
+6)
 We recommended a biological triplicate with each replicate on one plate,
 i.e., if we have 5 x 10 combinations and blank and control wells,
 we put them in one plate
 and prepare a total of three plates.
 Moreover, each plate normalized to the respective blank well.
 
+7)
 OD600 was then recorded using different micro-plate reader with kinetic mode,
 e.g.: TECAN Infinite M200 Microplate Reader (TECAN Group Ltd., Switzerland)
 or other apllicable instruments with proper settings.
 
 After the completion of the measurement, raw data were exported in Excel format for further analysis.
 
+8)
 As for users interested in the OVAMO method that employed in situ anaerobicity generation,
 details of hardware set-up could be referred to the OVAMO - Hardware Publication:
 
 Lam et al. Low-Cost Method Generating In Situ Anaerobic Conditions on a 96-Well Plate for Microbial Fermentation in Food Research
 J. Agric. Food Chem. 2018;66(4): 11839-11845.
+
+
 
 EOF
