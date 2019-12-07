@@ -1,5 +1,6 @@
 # OVAMO_CUHK
-Online tutorial for structure-property relationship investigation using random forest analysis.
+Online tutorial for microbial growth parameters (lag, maximum growth rate and maximum population increase) determination
+and structure-property relationship investigation using random forest analysis.
 
 The tutorial adopted the OVAMO system for anaerobic microbial culture using 96 well plate,
 with raw data, examples and codes provided.
