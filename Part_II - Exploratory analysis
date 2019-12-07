@@ -269,7 +269,8 @@ Part II - Exploratory analysis
 
 
 
-8) Explorative analysis - Principle component analysis, PCA
+
+8) Explorative analysis - Principle component analysis, PCA, biplot
   # we use all the data point for PCA anlysis, i.e., not mean,
   # and there a total of 135 observations used.
   
@@ -325,17 +326,16 @@ Part II - Exploratory analysis
   bG_Control - 1    0.69959 0.96662 0.30197 0.08970 0.20242
   bG_Control - 2    0.82160 0.89307 0.43571 0.21270 0.08319
   bG_Control - 3    0.81411 1.16006 0.31031 0.25044 0.45000
-  
   # prepare the PCA input matrix for MaxOD based on 5 probiotic strains
   > all_MaxOD_strain_long <- combined[,c(10,1,6)]
   > all_MaxOD_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_MaxOD_strain_long, key = Strain, value = MaxOD))),var="z"))
-  
   # prepare the PCA input matrix for Lag based on 5 probiotic strains
   > all_Lag_strain_long <- combined[,c(10,1,7)]
   > all_Lag_strain_wide <- as.matrix(column_to_rownames(remove_rownames(as.data.frame(spread(all_Lag_strain_long, key = Strain, value = Lag))),var="z"))
   
   
   # perform PCA biplot using "factoextra" package
+  # first install and load the package
   > install.packages("factoextra")
   > library("factoextra")
   
