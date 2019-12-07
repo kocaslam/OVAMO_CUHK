@@ -2,16 +2,20 @@ Part I: Growth parameter detrmination.
 
 Growth parameters include: 
   1) Lag phase;
-  2) Maximum growth rate;
-  3) Maximum population increase;
+  2) Maximum growth rate; and,
+  3) Maximum population increase.
 for each combination of probiotics and carbohydrates in each plates.
 
-The foloowing use the software "GrowthRate" to determinate the growth characteristics.
-It is a non-parametric method, i.e., not based on growth model,
+The following analysis used the software "GrowthRate" to determine the three growth parameters.
+(Users could used other curve fitting approach to obtain different growth parameters
+for exploratory analysis and structure-property realtionship investigation using random forests algorithm)
+
+"GrowthRate" is a non-parametric method, i.e., not based on growth models,
 but still proivdes the three growth parameter estimates.
 It provides faster curve fitting behaviour.
 
 Users could choose to use their own curve fitting algorithms
+(most curve-fitting softwares allow users to formula their own equations for curve fitting)
 or using other growth fitting softares/packages.
 
 Please cite the following for using the "GrowthRate" software:
@@ -68,15 +72,17 @@ For other platforms, please refer to the manual provided by the developer.
   Beside, a rough data estimation/skimming could be done during re-formatting.
   Users could also write their own codes for re-formatting.
   
-  Assume, we have the re-formatted file save as .txt:
+  Assume, we have the re-formatted file save as .txt,
+  for the three biological triplicate plates:
   a) formattedData1.txt
   b) formattedData2.txt
   c) formattedData3.txt
-  A total of three files as biological triplicate.
+  A total of three files as biological triplicates.
   Assume the three files are stored in the "Download" folder.
   
-  We provide one of the file "formattedData1.txt" as example file
+  We provided one "formattedData1.txt" as example file
   for users to explore the use of "GrowthRate".
+  User could arrange the input file format based on the example file.
   
 2) Software download and installation
   a) Download the software (check the computer platform):
@@ -85,10 +91,14 @@ For other platforms, please refer to the manual provided by the developer.
     Download the zip file to the "Download" folder
     (users could also download the GrowthRate software in the repository. But it might lack update.)
 
-  b) Installation (open the terminal)
+  b) Installation (open the terminal (for macOS user))
+    # Users need to make sure the operating system
+    # check the softare
     $ cd /Isers/kocaslam/Downloads/
     $ ls
       GrowthRates 3.0 Mac.zip
+    
+    # unzip the software
     $ unzip GrowthRates\ 3.0\ Mac.zip -d ./
       Archive:  GrowthRates 3.0 Mac.zip
       creating: ./GrowthRates 3.0 Mac/
@@ -97,6 +107,8 @@ For other platforms, please refer to the manual provided by the developer.
       creating: ./__MACOSX/GrowthRates 3.0 Mac/
       inflating: ./__MACOSX/GrowthRates 3.0 Mac/._.DS_Store
       ...
+    
+    # check software contents 
     $ cd GrowthRates\ 3.0\ Mac
     $ ls -l
       total 1044o
@@ -104,9 +116,12 @@ For other platforms, please refer to the manual provided by the developer.
       drwxr-xr-x@ 5 kocaslam  staff      160 Jan 13  2018 Examples Unix
       -rwxr-xr-x@ 1 kocaslam  staff  2856268 Jan 13  2018 GrowthRates
       -rw-r--r--@ 1 kocaslam  staff  2416980 Feb 22  2018 GrowthRates 3.0  Documentation.pdf
+    
+    # put software to "/usr/local/bin" which can be called at different working directory
     $ cp GrowthRates /usr/local/bin
 
 3) Running GrowthRate
+    # put all the three re-formmated OD600 data files into the same directory
     $ cd /Users/kocaslam/Downloads
     $ ls
       GrowthRates 3.0 Mac
@@ -120,15 +135,18 @@ For other platforms, please refer to the manual provided by the developer.
     $ cd ownData/
     $ ls
       formattedData1.txt	formattedData2.txt	formattedData3.txt
+    # run the GrowthRate analysis
     $ GrowthRates -i formattedData1.txt -w 1
     $ GrowthRates -i formattedData2.txt -w 1
     $ GrowthRates -i formattedData3.txt -w 1
 
 4) Results
+    # check all the results outputs
     $ ls
       formattedData1.results	formattedData2.results	formattedData3.results
       formattedData1.summary	formattedData2.summary	formattedData3.summary
       formattedData1.txt	formattedData2.txt	formattedData3.txt
+    # check one of the result files
     $ less -S formattedData1.results
       GrowthRates v3.0 copyright 2018 Barry G. Hall and The Bellingham Research Institute.
       Data file: formattedData1.txt.
@@ -149,6 +167,7 @@ For other platforms, please refer to the manual provided by the developer.
       The lag time is 134.2 minutes
       *********************************************************
       ...
+    # check the result summary
     $ less -S formattedData1.summary
               Growth
       Well    Rate      R     Max OD   lag time (minutes)
@@ -163,11 +182,18 @@ For other platforms, please refer to the manual provided by the developer.
       B9      0.00918 0.99337 0.363   151.7
       B10     0.00820 0.99618 0.356   136.1
       ...
-      
-  The three ouput files: 
-  formattedData1.summary
-  formattedData2.summary
-  formattedData3.summary
+  _________________________________________________________________________
+  
+  
+  
+  
+  Concluding remarks:
+  After GrowthRate analysis, we have three ouput files as:
+  1) formattedData1.summary
+  2) formattedData2.summary
+  3) formattedData3.summary
   are the output files we needed for next step analysis.
+  
+  
   
   EOF
