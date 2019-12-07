@@ -467,7 +467,7 @@ Users could open the file and get their data input similarly.
          cor 
   -0.2390396 
 
-  # MaxOD_vs_sol
+  # MaxOD_vs_functional group
   > ggplot(correlation, aes(x=funct, y=MaxOD)) + scale_x_continuous(limits=c(-0.2,1.2)) + scale_y_continuous(limits=c(0, 1.35))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$MaxOD, correlation$funct)
 	  Pearson's product-moment correlation
@@ -480,7 +480,7 @@ Users could open the file and get their data input similarly.
         cor 
   -0.1722879
 
-  # Lag_vs_sol
+  # Lag_vs_functional group
   > ggplot(correlation, aes(x=funct, y=Lag)) + scale_x_continuous(limits=c(-0.2,1.2)) + scale_y_continuous(limits=c(0, 8.5))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Lag, correlation$funct)
 	  Pearson's product-moment correlation
