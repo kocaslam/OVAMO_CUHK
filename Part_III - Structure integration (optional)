@@ -1,8 +1,12 @@
-Part IV - Structure integration (optional)
+Part III - Structural data integration (optional)
 
-This part is meant for the integration analysi with structure data available.
+This part is meant for the integration analysis with structure data available.
 Structural importance of different structural features was accessed by random forest analysis.
 It allows a comparable indicaotr among different structural features that are not themselves originally comparable.
+
+*** However, this structural importance from random forest does not imply
+    direction of increase/decrease or non-linear relatioship.
+*** Direction of change could be easily accessed from correlation and/or regression.
 
 Structure data can be from different chemical/instrumental analysis,
 for example:
