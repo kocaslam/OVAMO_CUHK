@@ -1,7 +1,7 @@
 Part II - Exploratory analysis
 
 1) Data acquistion
-  The three ouput files from previous step of "GrowthRate" analysis
+  The three output files from previous step of "GrowthRate" analysis
   (Part I - Growth characteristics): 
     formattedData1.summary
     formattedData2.summary
@@ -9,7 +9,7 @@ Part II - Exploratory analysis
   are the output files we needed for next step analysis.
   
 2) Data merge and re-formatting
-  User are recomended to manually open the files using excel and merge all data into 1 file.
+  User are recommended to manually open the files using excel and merge all data into 1 file.
     ----------
     	  Growth			
     Well	Rate	  R	Max OD	 lag time (minutes)
@@ -48,7 +48,7 @@ Part II - Exploratory analysis
   This files could be used for the explorative analysis.
   
   Users could also do a filtering step to the data and/or transformation to the data
-  bsed on their objectives/analysis consideration
+  based on their objectives/analysis consideration
   to gather the final input table for exploratory analysis in R.
   
   Here, we provide an example file named "combined.csv":
@@ -68,7 +68,7 @@ Part II - Exploratory analysis
   It is easily doen in excel using the "=A4/$B$4",
   assuming the A4 is the other 9 carbohydrates and B4 is glucose value.
   
-  ***This normalization should be done separatly on each plate and to each combination of bacteria.
+  ***This normalization should be done separately on each plate and to each combination of bacteria.
   After normalization, the glucose value is 1 and all the glucose values are removed.
   
   The final normalized re-formatted input file look as:
@@ -88,8 +88,8 @@ Part II - Exploratory analysis
     ...
     ----------
     
-  Users coud use this normalized file as input 
-  or the orginal file as input for exploratory analysis
+  Users could use this normalized file as input 
+  or the original file as input for exploratory analysis
   based on the objective of investigation.
   
   We recommended a normalization step.
@@ -112,14 +112,14 @@ Part II - Exploratory analysis
    
    Please check the version matching between R and R-studio.
    
-   Open R Studio in the Application ot see if the program run well.
+   Open R Studio in the Application to see if the program run well.
    A command line interface can also be run in terminal to do the analysis,
    but we recommended using R Studio as we could check the input and graphics easily.
   
    Users might see a different between their output
    and the example output here
    due to the order of row is different in the "combined.csv" file
-   but it will not affacted the overall exploratory analysis.
+   but it will not affect the overall exploratory analysis.
 
 5) Explorative analysis - Overall distribution
   # in R-Studio console
@@ -145,7 +145,7 @@ Part II - Exploratory analysis
     198         CC     Lactulose     3 0.00757 0.96919 0.353 290.6
   > summary(combined)
   
-  # to see th eoverall distribution of R2 value
+  # to see the overall distribution of R2 value
   > boxplot(combined$R2)
   
   # to see the correlation among Rate, MaxOD and Lag
@@ -155,7 +155,7 @@ Part II - Exploratory analysis
   > chart.Correlation(my_data, histogram=TRUE, pch=19) 
   
   # to check the vale of Rate, MaxOD and Lag among the three plates
-  # we devided the data into three plates based on the row number as the row are arranged according to plate,
+  # we divided the data into three plates based on the row number as the row are arranged according to plate,
   # user are required to double check their row number of the "combined.csv" file in order to get the data division correct.
   # Rate of Plate 1, 2, and 3
   > my_data2 <- merge(merge(as.data.frame(combined[1:45,c(1,2,4)]), as.data.frame(combined[46:90,c(1,2,4)]), by=c("Strain", "Carbohydrate")), as.data.frame(combined[91:135,c(1,2,4)]), by=c("Strain", "Carbohydrate"))
@@ -227,7 +227,7 @@ Part II - Exploratory analysis
   # matrix with mean of Lag
   > Lag_only_mean <- combined[,c(7,8)] %>% group_by(x) %>% summarise(average = mean(Lag))
  
-  # hierachically clustered heatmap generation using pheatmap
+  # hierarchically clustered heatmap generation using pheatmap
   > install.packages("pheatmap")
   > library(pheatmap)
   # heatmap_rate of Rate
@@ -272,7 +272,7 @@ Part II - Exploratory analysis
 
 8) Explorative analysis - Principle component analysis, PCA, biplot
   # we use all the data point for PCA anlysis, i.e., not mean,
-  # and there a total of 135 observations used.
+  # and there were a total of 135 observations used.
   
   # prepare the PCA input format
   > combined$y <- paste(combined$Strain,"-",combined$Plate)
