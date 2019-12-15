@@ -2,10 +2,10 @@ Part III - Structural data integration (optional)
 
 This part is meant for the integration analysis with structure data available.
 Structural importance of different structural features was accessed by random forest analysis.
-It allows a comparable indicaotr among different structural features that are not themselves originally comparable.
+It allows a comparable indicator among different structural features that are not themselves originally comparable.
 
 *** However, this structural importance from random forest does not imply
-    direction of increase/decrease or non-linear relatioship.
+    direction of increase/decrease or non-linear relationship.
 *** Direction of change could be easily accessed from correlation and/or regression.
 
 Structure data can be from different chemical/instrumental analysis,
@@ -14,13 +14,13 @@ for example:
   2) total protein percentage;
   3) molecular weight distribution from HPLC;
   4) mono-saccharide composition;
-  5) glcosidic linkage;
+  5) glycosidic linkage;
   6) special function group addition (yes/no)
   7) solubility
   ...
  
 The choice of structural features are unlimited and greatly depends on the users' objectives
-and the abolity to locate novel structural features that are useful for futrther investigation.
+and the ability to locate novel structural features that are useful for further investigation.
 Since random forest is a machine learning algorithm, it requires domain knowledge for feature generation.
 
 Here, we employed what we have in the previous analysis of carbohydrate-probiotic fermentation.
@@ -36,7 +36,7 @@ As new algorithm is being pushed out and old algorithm is being updated,
 users could choose their suitable analysis algorithm,
 such as other machine learning methods.
 
-Here, we demostrtaed how it is done using the "RandomForest" package in R.
+Here, we demostrated how it is done using the "RandomForest" package in R.
 We provide an example by extracting only a particular type of carbohydrate
 from the tutorial in Part_I and Part_II.
 The extracted carbohydrate was beta-glucans, a beta-linked glucose polymeric carbohydrates.
@@ -163,8 +163,8 @@ Users could open the file and get their data input similarly.
 4) Random forest analysis to retrieve importance of different structural features on growth parameters (Rate, MaxOD, and Lag)
   # As for the random forest analysis, users could also do an extra optimization procedure to the hyper-parameters
   # such as "mtry", "ntree" using the package "caret".
-  # Optimization methods inlcude grid search or random search.
-  # Optimization of hyper-parameters take time and the improvement might not be very prominents.
+  # Optimization methods include grid search or random search.
+  # Optimization of hyper-parameters take time and the improvement might not be very prominent.
   # Since our dataset is small, here, we only demonstrated the most basic use of random forest analysis
   # without hyper-parameter optimization, still giving sufficient insights.
   
@@ -180,7 +180,7 @@ Users could open the file and get their data input similarly.
   No. of variables tried at each split: 3
             Mean of squared residuals: 0.09621044
                       % Var explained: 26.31
-  # Check error with increaseing number of trees added to forest
+  # Check error with increasing number of trees added to forest
   > plot(Rate.rf)
   # Obtain the relative importance of different structural features, both Type I and Type II
   > importance(Rate.rf, type=1)
@@ -228,7 +228,7 @@ Users could open the file and get their data input similarly.
   No. of variables tried at each split: 3
             Mean of squared residuals: 0.06981258
                       % Var explained: 40.5
-  # Check error with increaseing number of trees added to forest
+  # Check error with increasing number of trees added to forest
   > plot(MaxOD.rf)
   # Obtain the relative importance of different structural features, both Type I and Type II
   > importance(MaxOD.rf, type=1)
@@ -276,7 +276,7 @@ Users could open the file and get their data input similarly.
   No. of variables tried at each split: 3
             Mean of squared residuals: 2.850568
                       % Var explained: 27.15
-  # Check error with increaseing number of trees added to forest
+  # Check error with increasing number of trees added to forest
   > plot(Lag.rf)
   # Obtain the relative importance of different structural features, both Type I and Type II
   > importance(Lag.rf, type=1)
@@ -312,13 +312,13 @@ Users could open the file and get their data input similarly.
   > varImpPlot(Lag.rf)
 
 7) Modification direction of selected structural features by classical Pearson's correlation.
-  # After determined some of the top strcutral feeatures that gave higher importance value using random forest analysis,
+  # After determined some of the top structural features that gave higher importance value using random forest analysis,
   # we would like to check the direction of change of structural features to the three growth parameters
   # in order to understand which modification should we perform,
-  # e.g., increase/decrease the structural features (such as molecualr weight ...)
-  # Here, we used Pearson's correlation, however sometimes, regression migth be more usesful as the relationship might not be linear.
+  # e.g., increase/decrease the structural features (such as molecular weight ...)
+  # Here, we used Pearson's correlation, however sometimes, regression might be more useful as the relationship might not be linear.
   # we extracted the top features and provide an example file as "correlation.csv".
-  # User could use their own judgement for top several featrues and use different softwares in doing Pearson's correlation.
+  # User could use their own judgement for top several features and use different softwares in doing Pearson's correlation.
   # We stick to R.
   
   # correlation after random forest top feature selection
@@ -371,7 +371,7 @@ Users could open the file and get their data input similarly.
   0.271716 
 
   ########################################
-  # Then we check percentage of carbohydarte
+  # Then we check percentage of carbohydrate
   # Rate_vs_%CHO
   > ggplot(correlation, aes(x=X.CHO, y=Rate)) + scale_x_continuous(limits=c(0.7,1)) + scale_y_continuous(limits=c(0, 1.75))  + geom_jitter(width=0.03, size=1, shape=1, color="seagreen", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Rate, correlation$X.CHO)
@@ -453,7 +453,7 @@ Users could open the file and get their data input similarly.
   -0.1489517 
 
   ########################################
-  # Finally, we check the functional group addition as carboxymethylation
+  # Finally, we check the functional group addition as carboxymethylation functional group addition
   # Rate_vs_functional group
   > ggplot(correlation, aes(x=funct, y=Rate)) + scale_x_continuous(limits=c(-0.2, 1.2)) + scale_y_continuous(limits=c(-0.1, 1.65))  + geom_jitter(width = 0.15, size=1, shape=1, color="yellow3", stroke=2) + geom_smooth(method = "lm", se=TRUE, color="red")
   > cor.test(correlation$Rate, correlation$funct)
