@@ -15,7 +15,7 @@ Please cite this online tutorial as:
 XXX
 
 Codes used for the exploratory analysis of fermentation,
-such as probiotics prebotics fermetnation to investigation
+such as probiotics prebiotics fermentation to investigate
 new prebiotics and engineer new probiotics strains.
 
 There are a total of four parts:
@@ -24,15 +24,17 @@ There are a total of four parts:
   3) Part II - Exploratory analysis;
   4) Part III - Structure integration (optional).
   
-Users are guided from the very begnning in obtaining the OD readout from microplat readers
+Users are guided from the very beginning in obtaining the OD readout from microplate readers
 to the final output of exploratory analysis output to gain biological insights.
 Softwares installation, data arrangement, parameters suggestion, and
-some raw data files, were provided to make the online tuturial more users-friednly.
+some raw data files, were provided to make the online tutorial more user-friendly.
 
-This online tutorial only served as a starting point for user to fet acquanited to
+This online tutorial only served as a starting point for user to get accquanted to
 the integration of exploratory and random forest analysis (machine learning) in polymer research.
 
 We adopted an example of carbohydrate polymer and probiotic in vitro fermentation study.
-Users could check on their biological question to see how should similar approcah be applied to their investigation.
+Users could check on their biological question to see how should similar approach be applied to their investigation.
+
+
 
 EOF
