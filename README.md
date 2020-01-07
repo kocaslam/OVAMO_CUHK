@@ -35,6 +35,10 @@ the integration of exploratory and random forest analysis (machine learning) in 
 We adopted an example of carbohydrate polymer and probiotic in vitro fermentation study.
 Users could check on their biological question to see how should similar approach be applied to their investigation.
 
-
+If users have a particular question to be investigated and would like to see the
+possibility in using machine learning in their investigation.
+We welcome collaboration in finding possible ways in addressing the link.
+Feel free to contact:
+cufns_kocas@link.cuhk.edu.hk
 
 EOF
