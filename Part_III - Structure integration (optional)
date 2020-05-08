@@ -23,6 +23,19 @@ The choice of structural features are unlimited and greatly depends on the users
 and the ability to locate novel structural features that are useful for further investigation.
 Since random forest is a machine learning algorithm, it requires domain knowledge for feature generation.
 
+Also, users need to carefully consider the structural features they employed
+and may want to perform some feature engineering to their structural features
+before proceeding to the model building step.
+
+Some featuire engineering that are applicable in polysaccharide strucutre could be:
+  1) clean the data of missing valiues, un-resonable values (out of range, too extreme ...);
+  2) select only interested features to reduce the model complexity;
+  3) factorize the data with information with ranking information;
+  4) construct new features based on existing feature data;
+  5) construct new feature based on models, such as PCA as dimension reduction
+  6) ...
+The choice of feature engineering should encompass donain knowldege realted to polyssacharide structure investigation.
+
 Here, we employed what we have in the previous analysis of carbohydrate-probiotic fermentation.
 The structural data were integrated into the analysis with the growth parameters,
 including:
@@ -51,6 +64,8 @@ We suggest doing this manually and double check for input correctness.
 
 We provide an example file named "structureMatrix_bGonly.csv".
 Users could open the file and get their data input similarly.
+We assume users have performed some sort of structrual feature engieeing works
+before going into model building step.
 
 1) Directory setting and data input
   # set the working directory and load the data
