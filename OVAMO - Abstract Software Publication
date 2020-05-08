@@ -1,3 +1,30 @@
 OVAMO - Software Publication Abstract
 
-To be updated
+https://doi.org/10.1016/j.foodhyd.2020.106001
+
+Beta-glucans as food hydrocolloids have demonstrated prebiotic potential recently.
+Novel hydrocolloid-based prebiotics could be developed by structural manipulation
+of existing carbohydrate candidates using different physical, chemical and/or biological approaches.
+However, there are no guidelines on choosing the most promising structural feature
+as the starting point(s) for modification.
+We performed a parallel in vitro fermentation of six native and carboxymethylated beta-glucans
+from mushroom, bacteria, seaweed and cereal against five probiotic bacteria,
+including bifidobacteria and lactobacillus, and determined their growth parameters
+including the lag phase, maximum growth rate, and maximum population increase.
+An unsupervised analysis pipeline was developed to elucidate the structure-property relationship of beta-glucans
+as prebiotic candidates and identified several chemical composition and structural features
+for modification to maximize their prebiotic potential.
+We adopted the random forest algorithm to quantify the relative importance
+of different composition and structural features in altering the three probiotic growth parameters.
+In terms of structural features, the desirable characteristics for prebiotic development are,
+in descending order of importance, low molecular weight, high water solubility,
+and no introduction of carboxymethyl functional group.
+Apart from structural features, we have identified the chemical composition as high purity,
+plays a significant importance in increasing the probiotic growth parameters,
+raising the relevance of including the purity in discussing the developmental cycle of prebiotic potential maximization.
+We suggest an integrated data alchemy approach including both machine learning and domain knowledge
+in making decision of choosing the promising starting point(s) and direction for modification
+of existing hydrocolloids in prebiotic research.
+
+
+Cite this: In press
