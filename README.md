@@ -11,8 +11,9 @@ cufns_kocas@link.cuhk.edu.hk
 The online tutorial also involved other open-source softwares.
 Please respect copy-right and cite the sources of softwares and codes used appropriately.
 
-Please cite this online tutorial as:
-XXX
+Please cite this online tutorial from this publication:
+https://doi.org/10.1016/j.foodhyd.2020.106001
+
 
 Codes used for the exploratory analysis of fermentation,
 such as probiotics prebiotics fermentation to investigate
@@ -38,7 +39,7 @@ Users could check on their biological question to see how should similar approac
 If users have a particular question to be investigated and would like to see the
 possibility in using machine learning in their investigation.
 We welcome collaboration in finding possible ways in addressing the link.
-Feel free to contact:
-cufns_kocas@link.cuhk.edu.hk
+Feel free to contact: cufns_kocas@link.cuhk.edu.hk
+
 
 EOF
