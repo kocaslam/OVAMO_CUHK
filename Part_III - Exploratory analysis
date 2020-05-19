@@ -1,4 +1,4 @@
-Part II - Exploratory analysis
+Part III - Exploratory analysis
 
 Exploratory data analysis (EDA) could allow users to gain a basic understanding
 to their data, such as the dustribution, extreme values ...
@@ -7,7 +7,7 @@ in terms of polyssachride structure and its funcrtion of interest.
 
 1) Data acquistion
   The three output files from previous step of "GrowthRate" analysis
-  (Part I - Growth characteristics): 
+  (Part II - Growth characteristics): 
     formattedData1.summary
     formattedData2.summary
     formattedData3.summary
