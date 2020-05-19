@@ -8,13 +8,13 @@ It allows a comparable indicator among different structural features that are no
     direction of increase/decrease or non-linear relationship.
 *** Direction of change could be easily accessed from correlation and/or regression.
 
-Structure data can be from different chemical/instrumental analysis,
+Structure data can be from different chemical/structural analysis,
 for example:
   1) total carbohydrate percentage;
   2) total protein percentage;
   3) molecular weight distribution from HPLC;
   4) mono-saccharide composition;
-  5) glycosidic linkage;
+  5) glycosidic linkage types;
   6) special function group addition (yes/no)
   7) solubility
   ...
@@ -27,14 +27,14 @@ Also, users need to carefully consider the structural features they employed
 and may want to perform some feature engineering to their structural features
 before proceeding to the model building step.
 
-Some featuire engineering that are applicable in polysaccharide strucutre could be:
-  1) clean the data of missing valiues, un-resonable values (out of range, too extreme ...);
+Some feature engineering works that are applicable in polysaccharide strucutre could be:
+  1) clean the data of missing values, and un-resonable values (out of range, too extreme ...);
   2) select only interested features to reduce the model complexity;
-  3) factorize the data with information with ranking information;
+  3) factorize the data with ranking information;
   4) construct new features based on existing feature data;
-  5) construct new feature based on models, such as PCA as dimension reduction
+  5) construct new features based on models, such as PCA as dimension reduction;
   6) ...
-The choice of feature engineering should encompass donain knowldege realted to polyssacharide structure investigation.
+The choice of feature engineering should encompass domain knowledge related to polyssacharide structural investigation.
 
 Here, we employed what we have in the previous analysis of carbohydrate-probiotic fermentation.
 The structural data were integrated into the analysis with the growth parameters,
