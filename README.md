@@ -20,10 +20,10 @@ such as probiotics prebiotics fermentation to investigate
 new prebiotics and engineer new probiotics strains.
 
 There are a total of four parts:
-  1) Part 0 - Wet lab of microbial growth kinetic pattern; 
-  2) Part I - Growth parameters determination; 
-  3) Part II - Exploratory analysis;
-  4) Part III - Structure integration (optional).
+  1) Part I - Wet lab of microbial growth kinetic pattern; 
+  2) Part II - Growth parameters determination; 
+  3) Part III - Exploratory analysis;
+  4) Part IV - Structure integration (optional).
   
 Users are guided from the very beginning in obtaining the OD readout from microplate readers
 to the final output of exploratory analysis output to gain biological insights.
