@@ -1,9 +1,9 @@
 Part III - Exploratory analysis
 
 Exploratory data analysis (EDA) could allow users to gain a basic understanding
-to their data, such as the dustribution, extreme values ...
-Users could then perform feature engineering in accoerdance to the domain knowledge
-in terms of polyssachride structure and its funcrtion of interest.
+to their data, such as the distribution, extreme values as outliers (some intersting activity) ...
+Users could then perform some feature engineering in accoerdance to the domain knowledge
+in terms of polysaccharide structure and function of interest.
 
 1) Data acquistion
   The three output files from previous step of "GrowthRate" analysis
