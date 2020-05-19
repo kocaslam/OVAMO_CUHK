@@ -2,11 +2,11 @@ Part I - Wet lab of microbial growth
 
 The OVAMO system (in situ anaerobic generation directly on 96 well plate)
 was adapted as example kinetic OD600 measurement.
-But it is not fixed.
+But it is not the only option.
 
 User could use other instrumental systems/protocol to obtain the kinetic data.
-Some reminder are listed as follow:
 
+Some reminder are listed as follow:
 1)
 Users need to need to ensure a fine enough time-points
 for data collection in order to have successful curve-fitting.
