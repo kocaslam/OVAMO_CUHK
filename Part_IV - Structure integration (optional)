@@ -1,4 +1,4 @@
-Part III - Structural data integration (optional)
+Part IV - Structural data integration (optional)
 
 This part is meant for the integration analysis with structure data available.
 Structural importance of different structural features was accessed by random forest analysis.
@@ -51,7 +51,7 @@ such as other machine learning methods.
 
 Here, we demostrated how it is done using the "RandomForest" package in R.
 We provide an example by extracting only a particular type of carbohydrate
-from the tutorial in Part_I and Part_II.
+from the tutorial in Part_II and Part_III.
 The extracted carbohydrate was beta-glucans, a beta-linked glucose polymeric carbohydrates.
 This help finding the relative importance of different structural features of just beat-glucans only.
 
